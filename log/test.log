@@ -1,0 +1,110 @@
+  [1m[35m (5.0ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (1.9ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+----------------------------------------------------------
+ApiV1PhonesTest: test_random_phone_returns_e164_and_fields
+----------------------------------------------------------
+Started GET "/api/v1/phones/random" for 127.0.0.1 at 2026-04-24 16:30:24 +0530
+Processing by Api::V1::PhonesController#random as HTML
+Completed 200 OK in 1495ms (Views: 0.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 993.1ms)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+------------------------------------------------------------
+ApiV1PhonesTest: test_random_phone_returns_401_without_token
+------------------------------------------------------------
+Started GET "/api/v1/phones/random" for 127.0.0.1 at 2026-04-24 16:30:26 +0530
+Processing by Api::V1::PhonesController#random as HTML
+Filter chain halted as :authenticate_bearer rendered or redirected
+Completed 401 Unauthorized in 1ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-----------------------------------
+ApiV1PhonesTest: test_lookup_for_US
+-----------------------------------
+Started GET "/api/v1/phones/lookup?phone=4155551234&country=US" for 127.0.0.1 at 2026-04-24 16:30:26 +0530
+Processing by Api::V1::PhonesController#lookup as HTML
+  Parameters: {"phone"=>"4155551234", "country"=>"US"}
+Completed 422 Unprocessable Content in 2ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-------------------------------------------
+ApiV1PhonesTest: test_validate_india_mobile
+-------------------------------------------
+Started POST "/api/v1/phones/validate" for 127.0.0.1 at 2026-04-24 16:30:26 +0530
+Processing by Api::V1::PhonesController#validate as HTML
+  Parameters: {"phone"=>"8123456789", "country_code"=>"91"}
+Completed 200 OK in 5ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-----------------------------------
+ApiV1PhonesTest: test_lookup_for_US
+-----------------------------------
+Started GET "/api/v1/phones/lookup?phone=2015550123&country=US" for 127.0.0.1 at 2026-04-24 16:31:06 +0530
+Processing by Api::V1::PhonesController#lookup as HTML
+  Parameters: {"phone"=>"2015550123", "country"=>"US"}
+Completed 200 OK in 287ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.6ms)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-------------------------------------------
+ApiV1PhonesTest: test_validate_india_mobile
+-------------------------------------------
+Started POST "/api/v1/phones/validate" for 127.0.0.1 at 2026-04-24 16:31:06 +0530
+Processing by Api::V1::PhonesController#validate as HTML
+  Parameters: {"phone"=>"8123456789", "country_code"=>"91"}
+Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+------------------------------------------------------------
+ApiV1PhonesTest: test_random_phone_returns_401_without_token
+------------------------------------------------------------
+Started GET "/api/v1/phones/random" for 127.0.0.1 at 2026-04-24 16:31:06 +0530
+Processing by Api::V1::PhonesController#random as HTML
+Filter chain halted as :authenticate_bearer rendered or redirected
+Completed 401 Unauthorized in 0ms (Views: 0.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+----------------------------------------------------------
+ApiV1PhonesTest: test_random_phone_returns_e164_and_fields
+----------------------------------------------------------
+Started GET "/api/v1/phones/random" for 127.0.0.1 at 2026-04-24 16:31:06 +0530
+Processing by Api::V1::PhonesController#random as HTML
+Completed 200 OK in 337ms (Views: 0.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.8ms)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+----------------------------------------------------------
+ApiV1PhonesTest: test_random_phone_returns_e164_and_fields
+----------------------------------------------------------
+Started GET "/api/v1/phones/random" for 127.0.0.1 at 2026-04-24 16:32:20 +0530
+Processing by Api::V1::PhonesController#random as HTML
+Completed 200 OK in 329ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.9ms)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-----------------------------------
+ApiV1PhonesTest: test_lookup_for_US
+-----------------------------------
+Started GET "/api/v1/phones/lookup?phone=2015550123&country=US" for 127.0.0.1 at 2026-04-24 16:32:20 +0530
+Processing by Api::V1::PhonesController#lookup as HTML
+  Parameters: {"phone"=>"2015550123", "country"=>"US"}
+Completed 200 OK in 3ms (Views: 0.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-------------------------------------------
+ApiV1PhonesTest: test_validate_india_mobile
+-------------------------------------------
+Started POST "/api/v1/phones/validate" for 127.0.0.1 at 2026-04-24 16:32:20 +0530
+Processing by Api::V1::PhonesController#validate as HTML
+  Parameters: {"phone"=>"8123456789", "country_code"=>"91"}
+Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+------------------------------------------------------------
+ApiV1PhonesTest: test_random_phone_returns_401_without_token
+------------------------------------------------------------
+Started GET "/api/v1/phones/random" for 127.0.0.1 at 2026-04-24 16:32:20 +0530
+Processing by Api::V1::PhonesController#random as HTML
+Filter chain halted as :authenticate_bearer rendered or redirected
+Completed 401 Unauthorized in 0ms (Views: 0.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m

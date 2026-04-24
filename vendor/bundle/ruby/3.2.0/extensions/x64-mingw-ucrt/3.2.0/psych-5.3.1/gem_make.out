@@ -1,0 +1,29 @@
+current directory: C:/Users/admin/Desktop/PhoneLib/vendor/bundle/ruby/3.2.0/gems/psych-5.3.1/ext/psych
+C:/Ruby32-x64/bin/ruby.exe extconf.rb
+creating Makefile
+
+current directory: C:/Users/admin/Desktop/PhoneLib/vendor/bundle/ruby/3.2.0/gems/psych-5.3.1/ext/psych
+make DESTDIR\= sitearchdir\=./.gem.20260424-1136-qwwpnn sitelibdir\=./.gem.20260424-1136-qwwpnn clean
+cd libyaml && make clean
+/bin/sh: line 1: cd: libyaml: No such file or directory
+make: [Makefile:287: clean-so] Error 1 (ignored)
+
+current directory: C:/Users/admin/Desktop/PhoneLib/vendor/bundle/ruby/3.2.0/gems/psych-5.3.1/ext/psych
+make DESTDIR\= sitearchdir\=./.gem.20260424-1136-qwwpnn sitelibdir\=./.gem.20260424-1136-qwwpnn
+generating psych-x64-mingw-ucrt.def
+compiling psych.c
+compiling psych_emitter.c
+compiling psych_parser.c
+compiling psych_to_ruby.c
+compiling psych_yaml_tree.c
+linking shared-object psych.so
+
+current directory: C:/Users/admin/Desktop/PhoneLib/vendor/bundle/ruby/3.2.0/gems/psych-5.3.1/ext/psych
+make DESTDIR\= sitearchdir\=./.gem.20260424-1136-qwwpnn sitelibdir\=./.gem.20260424-1136-qwwpnn install
+/usr/bin/install -c -m 0755 psych.so ./.gem.20260424-1136-qwwpnn
+
+current directory: C:/Users/admin/Desktop/PhoneLib/vendor/bundle/ruby/3.2.0/gems/psych-5.3.1/ext/psych
+make DESTDIR\= sitearchdir\=./.gem.20260424-1136-qwwpnn sitelibdir\=./.gem.20260424-1136-qwwpnn clean
+cd libyaml && make clean
+/bin/sh: line 1: cd: libyaml: No such file or directory
+make: [Makefile:287: clean-so] Error 1 (ignored)

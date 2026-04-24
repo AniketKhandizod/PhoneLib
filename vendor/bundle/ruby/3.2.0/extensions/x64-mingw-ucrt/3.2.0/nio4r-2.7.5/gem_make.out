@@ -1,0 +1,18 @@
+current directory: C:/Users/admin/Desktop/PhoneLib/vendor/bundle/ruby/3.2.0/gems/nio4r-2.7.5/ext/nio4r
+C:/Ruby32-x64/bin/ruby.exe extconf.rb
+
+current directory: C:/Users/admin/Desktop/PhoneLib/vendor/bundle/ruby/3.2.0/gems/nio4r-2.7.5/ext/nio4r
+make DESTDIR\= sitearchdir\=./.gem.20260424-1136-arp0zt sitelibdir\=./.gem.20260424-1136-arp0zt clean
+make: *** No rule to make target 'clean'.  Stop.
+
+current directory: C:/Users/admin/Desktop/PhoneLib/vendor/bundle/ruby/3.2.0/gems/nio4r-2.7.5/ext/nio4r
+make DESTDIR\= sitearchdir\=./.gem.20260424-1136-arp0zt sitelibdir\=./.gem.20260424-1136-arp0zt
+make: Nothing to be done for 'all'.
+
+current directory: C:/Users/admin/Desktop/PhoneLib/vendor/bundle/ruby/3.2.0/gems/nio4r-2.7.5/ext/nio4r
+make DESTDIR\= sitearchdir\=./.gem.20260424-1136-arp0zt sitelibdir\=./.gem.20260424-1136-arp0zt install
+make: Nothing to be done for 'install'.
+
+current directory: C:/Users/admin/Desktop/PhoneLib/vendor/bundle/ruby/3.2.0/gems/nio4r-2.7.5/ext/nio4r
+make DESTDIR\= sitearchdir\=./.gem.20260424-1136-arp0zt sitelibdir\=./.gem.20260424-1136-arp0zt clean
+make: *** No rule to make target 'clean'.  Stop.

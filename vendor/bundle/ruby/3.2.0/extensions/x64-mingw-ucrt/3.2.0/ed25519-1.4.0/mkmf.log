@@ -1,0 +1,191 @@
+block in append_cflags: checking for whether -Wall is accepted as CFLAGS... -------------------- yes
+
+PATH=".;C:/Ruby32-x64/lib;C:\Ruby32-x64\bin;C:\Ruby32-x64\msys64\ucrt64\bin;C:\Ruby32-x64\msys64\usr\bin;C:\Program Files\PowerShell\7;c:\Users\admin\AppData\Local\Programs\cursor\resources\app\resources\helpers;C:\Ruby32-x64\bin;C:\Ruby34-x64\bin;C:\Program Files\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Java\jdk-23\bin;C:\Program Files\apache-maven-3.9.9\bin;C:\Program Files\nodejs\;C:\Program Files\nodejs\node_modules\npm\bin;C:\Program Files\Git\cmd;c:\Users\admin\AppData\Local\Programs\cursor\resources\app\bin;C:\Users\admin\AppData\Local\Android\Sdk\platform-tools;C:\Users\admin\AppData\Local\Android\Sdk\emulator;C:\Users\admin\AppData\Local\Android\Sdk\tools;C:\Users\admin\AppData\Local\Android\Sdk\tools\bin;C:\ngrok;C:\Users\admin\Desktop\apache-jmeter-5.6.3\bin;C:\Program Files\Go\bin;C:\Program Files\Go\bin;C:\Program Files\dotnet\;C:\Program Files\PowerShell\7\;C:\Users\admin\AppData\Local\Microsoft\WindowsApps;C:\Users\admin\AppData\Roaming\npm;C:\Users\admin\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\Java\jdk-23\bin;C:\Program Files\apache-maven-3.9.9\bin;C:\Program Files\nodejs\node_modules\npm\bin;C:\Users\admin\AppData\Local\Programs\mongosh\;C:\Users\admin\AppData\Local\Programs\cursor\resources\app\bin;C:\Users\admin\go\bin;C:\Users\admin\AppData\Local\Python\bin;C:\Users\admin\AppData\Local\Programs\Antigravity\bin;C:\Users\admin\.dotnet\tools" "gcc -o conftest.exe -IC:/Ruby32-x64/include/ruby-3.2.0/x64-mingw-ucrt -IC:/Ruby32-x64/include/ruby-3.2.0/ruby/backward -IC:/Ruby32-x64/include/ruby-3.2.0 -I.  -DFD_SETSIZE=2048 -D_WIN32_WINNT=0x0600 -D__MINGW_USE_VC2005_COMPAT -D_FILE_OFFSET_BITS=64  -O3 -fno-fast-math -fstack-protector-strong conftest.c  -L. -LC:/Ruby32-x64/lib -L. -pipe -s -fstack-protector-strong -Wl,--no-as-needed  -m64   -lx64-ucrt-ruby320  -lshell32 -lws2_32 -liphlpapi -limagehlp -lshlwapi -lbcrypt  "
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: #include <winsock2.h>
+4: #include <windows.h>
+5: int main(int argc, char **argv)
+6: {
+7:   return !!argv[argc];
+8: }
+/* end */
+
+PATH=".;C:/Ruby32-x64/lib;C:\Ruby32-x64\bin;C:\Ruby32-x64\msys64\ucrt64\bin;C:\Ruby32-x64\msys64\usr\bin;C:\Program Files\PowerShell\7;c:\Users\admin\AppData\Local\Programs\cursor\resources\app\resources\helpers;C:\Ruby32-x64\bin;C:\Ruby34-x64\bin;C:\Program Files\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Java\jdk-23\bin;C:\Program Files\apache-maven-3.9.9\bin;C:\Program Files\nodejs\;C:\Program Files\nodejs\node_modules\npm\bin;C:\Program Files\Git\cmd;c:\Users\admin\AppData\Local\Programs\cursor\resources\app\bin;C:\Users\admin\AppData\Local\Android\Sdk\platform-tools;C:\Users\admin\AppData\Local\Android\Sdk\emulator;C:\Users\admin\AppData\Local\Android\Sdk\tools;C:\Users\admin\AppData\Local\Android\Sdk\tools\bin;C:\ngrok;C:\Users\admin\Desktop\apache-jmeter-5.6.3\bin;C:\Program Files\Go\bin;C:\Program Files\Go\bin;C:\Program Files\dotnet\;C:\Program Files\PowerShell\7\;C:\Users\admin\AppData\Local\Microsoft\WindowsApps;C:\Users\admin\AppData\Roaming\npm;C:\Users\admin\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\Java\jdk-23\bin;C:\Program Files\apache-maven-3.9.9\bin;C:\Program Files\nodejs\node_modules\npm\bin;C:\Users\admin\AppData\Local\Programs\mongosh\;C:\Users\admin\AppData\Local\Programs\cursor\resources\app\bin;C:\Users\admin\go\bin;C:\Users\admin\AppData\Local\Python\bin;C:\Users\admin\AppData\Local\Programs\Antigravity\bin;C:\Users\admin\.dotnet\tools" "gcc -IC:/Ruby32-x64/include/ruby-3.2.0/x64-mingw-ucrt -IC:/Ruby32-x64/include/ruby-3.2.0/ruby/backward -IC:/Ruby32-x64/include/ruby-3.2.0 -I.  -DFD_SETSIZE=2048 -D_WIN32_WINNT=0x0600 -D__MINGW_USE_VC2005_COMPAT -D_FILE_OFFSET_BITS=64  -O3 -fno-fast-math -fstack-protector-strong -m64 -Wall -Werror -c conftest.c"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: #include <winsock2.h>
+4: #include <windows.h>
+5: int main(int argc, char **argv)
+6: {
+7:   return !!argv[argc];
+8: }
+/* end */
+
+--------------------
+
+block in append_cflags: checking for whether -O3 is accepted as CFLAGS... -------------------- yes
+
+PATH=".;C:/Ruby32-x64/lib;C:\Ruby32-x64\bin;C:\Ruby32-x64\msys64\ucrt64\bin;C:\Ruby32-x64\msys64\usr\bin;C:\Program Files\PowerShell\7;c:\Users\admin\AppData\Local\Programs\cursor\resources\app\resources\helpers;C:\Ruby32-x64\bin;C:\Ruby34-x64\bin;C:\Program Files\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Java\jdk-23\bin;C:\Program Files\apache-maven-3.9.9\bin;C:\Program Files\nodejs\;C:\Program Files\nodejs\node_modules\npm\bin;C:\Program Files\Git\cmd;c:\Users\admin\AppData\Local\Programs\cursor\resources\app\bin;C:\Users\admin\AppData\Local\Android\Sdk\platform-tools;C:\Users\admin\AppData\Local\Android\Sdk\emulator;C:\Users\admin\AppData\Local\Android\Sdk\tools;C:\Users\admin\AppData\Local\Android\Sdk\tools\bin;C:\ngrok;C:\Users\admin\Desktop\apache-jmeter-5.6.3\bin;C:\Program Files\Go\bin;C:\Program Files\Go\bin;C:\Program Files\dotnet\;C:\Program Files\PowerShell\7\;C:\Users\admin\AppData\Local\Microsoft\WindowsApps;C:\Users\admin\AppData\Roaming\npm;C:\Users\admin\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\Java\jdk-23\bin;C:\Program Files\apache-maven-3.9.9\bin;C:\Program Files\nodejs\node_modules\npm\bin;C:\Users\admin\AppData\Local\Programs\mongosh\;C:\Users\admin\AppData\Local\Programs\cursor\resources\app\bin;C:\Users\admin\go\bin;C:\Users\admin\AppData\Local\Python\bin;C:\Users\admin\AppData\Local\Programs\Antigravity\bin;C:\Users\admin\.dotnet\tools" "gcc -IC:/Ruby32-x64/include/ruby-3.2.0/x64-mingw-ucrt -IC:/Ruby32-x64/include/ruby-3.2.0/ruby/backward -IC:/Ruby32-x64/include/ruby-3.2.0 -I.  -DFD_SETSIZE=2048 -D_WIN32_WINNT=0x0600 -D__MINGW_USE_VC2005_COMPAT -D_FILE_OFFSET_BITS=64  -O3 -fno-fast-math -fstack-protector-strong -Wall -m64 -O3 -Werror -c conftest.c"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: #include <winsock2.h>
+4: #include <windows.h>
+5: int main(int argc, char **argv)
+6: {
+7:   return !!argv[argc];
+8: }
+/* end */
+
+--------------------
+
+block in append_cflags: checking for whether -pedantic is accepted as CFLAGS... -------------------- no
+
+PATH=".;C:/Ruby32-x64/lib;C:\Ruby32-x64\bin;C:\Ruby32-x64\msys64\ucrt64\bin;C:\Ruby32-x64\msys64\usr\bin;C:\Program Files\PowerShell\7;c:\Users\admin\AppData\Local\Programs\cursor\resources\app\resources\helpers;C:\Ruby32-x64\bin;C:\Ruby34-x64\bin;C:\Program Files\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Java\jdk-23\bin;C:\Program Files\apache-maven-3.9.9\bin;C:\Program Files\nodejs\;C:\Program Files\nodejs\node_modules\npm\bin;C:\Program Files\Git\cmd;c:\Users\admin\AppData\Local\Programs\cursor\resources\app\bin;C:\Users\admin\AppData\Local\Android\Sdk\platform-tools;C:\Users\admin\AppData\Local\Android\Sdk\emulator;C:\Users\admin\AppData\Local\Android\Sdk\tools;C:\Users\admin\AppData\Local\Android\Sdk\tools\bin;C:\ngrok;C:\Users\admin\Desktop\apache-jmeter-5.6.3\bin;C:\Program Files\Go\bin;C:\Program Files\Go\bin;C:\Program Files\dotnet\;C:\Program Files\PowerShell\7\;C:\Users\admin\AppData\Local\Microsoft\WindowsApps;C:\Users\admin\AppData\Roaming\npm;C:\Users\admin\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\Java\jdk-23\bin;C:\Program Files\apache-maven-3.9.9\bin;C:\Program Files\nodejs\node_modules\npm\bin;C:\Users\admin\AppData\Local\Programs\mongosh\;C:\Users\admin\AppData\Local\Programs\cursor\resources\app\bin;C:\Users\admin\go\bin;C:\Users\admin\AppData\Local\Python\bin;C:\Users\admin\AppData\Local\Programs\Antigravity\bin;C:\Users\admin\.dotnet\tools" "gcc -IC:/Ruby32-x64/include/ruby-3.2.0/x64-mingw-ucrt -IC:/Ruby32-x64/include/ruby-3.2.0/ruby/backward -IC:/Ruby32-x64/include/ruby-3.2.0 -I.  -DFD_SETSIZE=2048 -D_WIN32_WINNT=0x0600 -D__MINGW_USE_VC2005_COMPAT -D_FILE_OFFSET_BITS=64  -O3 -fno-fast-math -fstack-protector-strong -Wall -O3 -m64 -pedantic -Werror -c conftest.c"
+In file included from C:/Ruby32-x64/include/ruby-3.2.0/ruby/internal/xmalloc.h:34,
+                 from C:/Ruby32-x64/include/ruby-3.2.0/ruby/defines.h:71,
+                 from C:/Ruby32-x64/include/ruby-3.2.0/ruby/ruby.h:25,
+                 from C:/Ruby32-x64/include/ruby-3.2.0/ruby.h:38,
+                 from conftest.c:1:
+C:/Ruby32-x64/include/ruby-3.2.0/ruby/internal/attr/nodiscard.h:35:34: error: ISO C does not support '[[]]' attributes before C23 [-Werror=pedantic]
+   35 | # define RBIMPL_ATTR_NODISCARD() [[nodiscard]]
+      |                                  ^
+C:/Ruby32-x64/include/ruby-3.2.0/ruby/internal/xmalloc.h:62:1: note: in expansion of macro 'RBIMPL_ATTR_NODISCARD'
+   62 | RBIMPL_ATTR_NODISCARD()
+      | ^~~~~~~~~~~~~~~~~~~~~
+C:/Ruby32-x64/include/ruby-3.2.0/ruby/internal/attr/nodiscard.h:35:34: error: ISO C does not support '[[]]' attributes before C23 [-Werror=pedantic]
+   35 | # define RBIMPL_ATTR_NODISCARD() [[nodiscard]]
+      |                                  ^
+C:/Ruby32-x64/include/ruby-3.2.0/ruby/internal/xmalloc.h:90:1: note: in expansion of macro 'RBIMPL_ATTR_NODISCARD'
+   90 | RBIMPL_ATTR_NODISCARD()
+      | ^~~~~~~~~~~~~~~~~~~~~
+C:/Ruby32-x64/include/ruby-3.2.0/ruby/internal/attr/nodiscard.h:35:34: error: ISO C does not support '[[]]' attributes before C23 [-Werror=pedantic]
+   35 | # define RBIMPL_ATTR_NODISCARD() [[nodiscard]]
+      |                                  ^
+C:/Ruby32-x64/include/ruby-3.2.0/ruby/internal/xmalloc.h:121:1: note: in expansion of macro 'RBIMPL_ATTR_NODISCARD'
+  121 | RBIMPL_ATTR_NODISCARD()
+      | ^~~~~~~~~~~~~~~~~~~~~
+C:/Ruby32-x64/include/ruby-3.2.0/ruby/internal/attr/nodiscard.h:35:34: error: ISO C does not support '[[]]' attributes before C23 [-Werror=pedantic]
+   35 | # define RBIMPL_ATTR_NODISCARD() [[nodiscard]]
+      |                                  ^
+C:/Ruby32-x64/include/ruby-3.2.0/ruby/internal/xmalloc.h:151:1: note: in expansion of macro 'RBIMPL_ATTR_NODISCARD'
+  151 | RBIMPL_ATTR_NODISCARD()
+      | ^~~~~~~~~~~~~~~~~~~~~
+C:/Ruby32-x64/include/ruby-3.2.0/ruby/internal/attr/nodiscard.h:35:34: error: ISO C does not support '[[]]' attributes before C23 [-Werror=pedantic]
+   35 | # define RBIMPL_ATTR_NODISCARD() [[nodiscard]]
+      |                                  ^
+C:/Ruby32-x64/include/ruby-3.2.0/ruby/internal/xmalloc.h:197:1: note: in expansion of macro 'RBIMPL_ATTR_NODISCARD'
+  197 | RBIMPL_ATTR_NODISCARD()
+      | ^~~~~~~~~~~~~~~~~~~~~
+In file included from C:/Ruby32-x64/include/ruby-3.2.0/ruby/backward/2/attributes.h:38,
+                 from C:/Ruby32-x64/include/ruby-3.2.0/ruby/defines.h:73:
+C:/Ruby32-x64/include/ruby-3.2.0/ruby/internal/attr/maybe_unused.h:31:37: error: ISO C does not support '[[]]' attributes before C23 [-Werror=pedantic]
+   31 | # define RBIMPL_ATTR_MAYBE_UNUSED() [[maybe_unused]]
+      |                                     ^
+C:/Ruby32-x64/include/ruby-3.2.0/ruby/internal/rgengc.h:365:5: note: in expansion of macro 'RBIMPL_ATTR_MAYBE_UNUSED'
+  365 |     RBIMPL_ATTR_MAYBE_UNUSED()
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~
+C:/Ruby32-x64/include/ruby-3.2.0/ruby/internal/attr/maybe_unused.h:31:37: error: ISO C does not support '[[]]' attributes before C23 [-Werror=pedantic]
+   31 | # define RBIMPL_ATTR_MAYBE_UNUSED() [[maybe_unused]]
+      |                                     ^
+C:/Ruby32-x64/include/ruby-3.2.0/ruby/internal/rgengc.h:367:5: note: in expansion of macro 'RBIMPL_ATTR_MAYBE_UNUSED'
+  367 |     RBIMPL_ATTR_MAYBE_UNUSED()
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~
+C:/Ruby32-x64/include/ruby-3.2.0/ruby/internal/attr/maybe_unused.h:31:37: error: ISO C does not support '[[]]' attributes before C23 [-Werror=pedantic]
+   31 | # define RBIMPL_ATTR_MAYBE_UNUSED() [[maybe_unused]]
+      |                                     ^
+C:/Ruby32-x64/include/ruby-3.2.0/ruby/internal/rgengc.h:393:5: note: in expansion of macro 'RBIMPL_ATTR_MAYBE_UNUSED'
+  393 |     RBIMPL_ATTR_MAYBE_UNUSED()
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~
+C:/Ruby32-x64/include/ruby-3.2.0/ruby/internal/attr/maybe_unused.h:31:37: error: ISO C does not support '[[]]' attributes before C23 [-Werror=pedantic]
+   31 | # define RBIMPL_ATTR_MAYBE_UNUSED() [[maybe_unused]]
+      |                                     ^
+C:/Ruby32-x64/include/ruby-3.2.0/ruby/internal/rgengc.h:396:5: note: in expansion of macro 'RBIMPL_ATTR_MAYBE_UNUSED'
+  396 |     RBIMPL_ATTR_MAYBE_UNUSED()
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~
+C:/Ruby32-x64/include/ruby-3.2.0/ruby/internal/attr/maybe_unused.h:31:37: error: ISO C does not support '[[]]' attributes before C23 [-Werror=pedantic]
+   31 | # define RBIMPL_ATTR_MAYBE_UNUSED() [[maybe_unused]]
+      |                                     ^
+C:/Ruby32-x64/include/ruby-3.2.0/ruby/internal/rgengc.h:398:5: note: in expansion of macro 'RBIMPL_ATTR_MAYBE_UNUSED'
+  398 |     RBIMPL_ATTR_MAYBE_UNUSED()
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~
+C:/Ruby32-x64/include/ruby-3.2.0/ruby/internal/attr/maybe_unused.h:31:37: error: ISO C does not support '[[]]' attributes before C23 [-Werror=pedantic]
+   31 | # define RBIMPL_ATTR_MAYBE_UNUSED() [[maybe_unused]]
+      |                                     ^
+C:/Ruby32-x64/include/ruby-3.2.0/ruby/internal/rgengc.h:428:5: note: in expansion of macro 'RBIMPL_ATTR_MAYBE_UNUSED'
+  428 |     RBIMPL_ATTR_MAYBE_UNUSED()
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~
+C:/Ruby32-x64/include/ruby-3.2.0/ruby/internal/attr/maybe_unused.h:31:37: error: ISO C does not support '[[]]' attributes before C23 [-Werror=pedantic]
+   31 | # define RBIMPL_ATTR_MAYBE_UNUSED() [[maybe_unused]]
+      |                                     ^
+C:/Ruby32-x64/include/ruby-3.2.0/ruby/internal/rgengc.h:430:5: note: in expansion of macro 'RBIMPL_ATTR_MAYBE_UNUSED'
+  430 |     RBIMPL_ATTR_MAYBE_UNUSED()
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~
+C:/Ruby32-x64/include/ruby-3.2.0/ruby/internal/attr/maybe_unused.h:31:37: error: ISO C does not support '[[]]' attributes before C23 [-Werror=pedantic]
+   31 | # define RBIMPL_ATTR_MAYBE_UNUSED() [[maybe_unused]]
+      |                                     ^
+C:/Ruby32-x64/include/ruby-3.2.0/ruby/internal/core/rarray.h:437:24: note: in expansion of macro 'RBIMPL_ATTR_MAYBE_UNUSED'
+  437 |                        RBIMPL_ATTR_MAYBE_UNUSED()
+      |                        ^~~~~~~~~~~~~~~~~~~~~~~~
+C:/Ruby32-x64/include/ruby-3.2.0/ruby/internal/attr/maybe_unused.h:31:37: error: ISO C does not support '[[]]' attributes before C23 [-Werror=pedantic]
+   31 | # define RBIMPL_ATTR_MAYBE_UNUSED() [[maybe_unused]]
+      |                                     ^
+C:/Ruby32-x64/include/ruby-3.2.0/ruby/internal/core/rarray.h:464:22: note: in expansion of macro 'RBIMPL_ATTR_MAYBE_UNUSED'
+  464 |                      RBIMPL_ATTR_MAYBE_UNUSED()
+      |                      ^~~~~~~~~~~~~~~~~~~~~~~~
+C:/Ruby32-x64/include/ruby-3.2.0/ruby/internal/attr/maybe_unused.h:31:37: error: ISO C does not support '[[]]' attributes before C23 [-Werror=pedantic]
+   31 | # define RBIMPL_ATTR_MAYBE_UNUSED() [[maybe_unused]]
+      |                                     ^
+C:/Ruby32-x64/include/ruby-3.2.0/ruby/backward/2/attributes.h:163:28: note: in expansion of macro 'RBIMPL_ATTR_MAYBE_UNUSED'
+  163 | #define RB_UNUSED_VAR(x) x RBIMPL_ATTR_MAYBE_UNUSED()
+      |                            ^~~~~~~~~~~~~~~~~~~~~~~~
+C:/Ruby32-x64/include/ruby-3.2.0/ruby/internal/scan_args.h:391:33: note: in expansion of macro 'RB_UNUSED_VAR'
+  391 |                  VALUE *vars[], RB_UNUSED_VAR(const char *fmt), RB_UNUSED_VAR(int varc))
+      |                                 ^~~~~~~~~~~~~
+C:/Ruby32-x64/include/ruby-3.2.0/ruby/internal/attr/maybe_unused.h:31:37: error: ISO C does not support '[[]]' attributes before C23 [-Werror=pedantic]
+   31 | # define RBIMPL_ATTR_MAYBE_UNUSED() [[maybe_unused]]
+      |                                     ^
+C:/Ruby32-x64/include/ruby-3.2.0/ruby/backward/2/attributes.h:163:28: note: in expansion of macro 'RBIMPL_ATTR_MAYBE_UNUSED'
+  163 | #define RB_UNUSED_VAR(x) x RBIMPL_ATTR_MAYBE_UNUSED()
+      |                            ^~~~~~~~~~~~~~~~~~~~~~~~
+C:/Ruby32-x64/include/ruby-3.2.0/ruby/internal/scan_args.h:391:65: note: in expansion of macro 'RB_UNUSED_VAR'
+  391 |                  VALUE *vars[], RB_UNUSED_VAR(const char *fmt), RB_UNUSED_VAR(int varc))
+      |                                                                 ^~~~~~~~~~~~~
+cc1.exe: all warnings being treated as errors
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: #include <winsock2.h>
+4: #include <windows.h>
+5: int main(int argc, char **argv)
+6: {
+7:   return !!argv[argc];
+8: }
+/* end */
+
+--------------------
+
+block in append_cflags: checking for whether -std=c99 is accepted as CFLAGS... -------------------- yes
+
+PATH=".;C:/Ruby32-x64/lib;C:\Ruby32-x64\bin;C:\Ruby32-x64\msys64\ucrt64\bin;C:\Ruby32-x64\msys64\usr\bin;C:\Program Files\PowerShell\7;c:\Users\admin\AppData\Local\Programs\cursor\resources\app\resources\helpers;C:\Ruby32-x64\bin;C:\Ruby34-x64\bin;C:\Program Files\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Java\jdk-23\bin;C:\Program Files\apache-maven-3.9.9\bin;C:\Program Files\nodejs\;C:\Program Files\nodejs\node_modules\npm\bin;C:\Program Files\Git\cmd;c:\Users\admin\AppData\Local\Programs\cursor\resources\app\bin;C:\Users\admin\AppData\Local\Android\Sdk\platform-tools;C:\Users\admin\AppData\Local\Android\Sdk\emulator;C:\Users\admin\AppData\Local\Android\Sdk\tools;C:\Users\admin\AppData\Local\Android\Sdk\tools\bin;C:\ngrok;C:\Users\admin\Desktop\apache-jmeter-5.6.3\bin;C:\Program Files\Go\bin;C:\Program Files\Go\bin;C:\Program Files\dotnet\;C:\Program Files\PowerShell\7\;C:\Users\admin\AppData\Local\Microsoft\WindowsApps;C:\Users\admin\AppData\Roaming\npm;C:\Users\admin\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\Java\jdk-23\bin;C:\Program Files\apache-maven-3.9.9\bin;C:\Program Files\nodejs\node_modules\npm\bin;C:\Users\admin\AppData\Local\Programs\mongosh\;C:\Users\admin\AppData\Local\Programs\cursor\resources\app\bin;C:\Users\admin\go\bin;C:\Users\admin\AppData\Local\Python\bin;C:\Users\admin\AppData\Local\Programs\Antigravity\bin;C:\Users\admin\.dotnet\tools" "gcc -IC:/Ruby32-x64/include/ruby-3.2.0/x64-mingw-ucrt -IC:/Ruby32-x64/include/ruby-3.2.0/ruby/backward -IC:/Ruby32-x64/include/ruby-3.2.0 -I.  -DFD_SETSIZE=2048 -D_WIN32_WINNT=0x0600 -D__MINGW_USE_VC2005_COMPAT -D_FILE_OFFSET_BITS=64  -O3 -fno-fast-math -fstack-protector-strong -Wall -O3 -m64 -std=c99 -Werror -c conftest.c"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: #include <winsock2.h>
+4: #include <windows.h>
+5: int main(int argc, char **argv)
+6: {
+7:   return !!argv[argc];
+8: }
+/* end */
+
+--------------------
+

@@ -1,0 +1,23 @@
+current directory: C:/Users/admin/Desktop/PhoneLib/vendor/bundle/ruby/3.2.0/gems/bootsnap-1.23.0/ext/bootsnap
+C:/Ruby32-x64/bin/ruby.exe extconf.rb
+checking for fdatasync() in unistd.h... no
+checking for fstatat() in sys/stat.h... no
+checking for whether -O3 is accepted as CFLAGS... yes
+checking for whether -std=c99 is accepted as CFLAGS... yes
+creating Makefile
+
+current directory: C:/Users/admin/Desktop/PhoneLib/vendor/bundle/ruby/3.2.0/gems/bootsnap-1.23.0/ext/bootsnap
+make DESTDIR\= sitearchdir\=./.gem.20260424-1136-qdsrua sitelibdir\=./.gem.20260424-1136-qdsrua clean
+
+current directory: C:/Users/admin/Desktop/PhoneLib/vendor/bundle/ruby/3.2.0/gems/bootsnap-1.23.0/ext/bootsnap
+make DESTDIR\= sitearchdir\=./.gem.20260424-1136-qdsrua sitelibdir\=./.gem.20260424-1136-qdsrua
+generating bootsnap-x64-mingw-ucrt.def
+compiling bootsnap.c
+linking shared-object bootsnap/bootsnap.so
+
+current directory: C:/Users/admin/Desktop/PhoneLib/vendor/bundle/ruby/3.2.0/gems/bootsnap-1.23.0/ext/bootsnap
+make DESTDIR\= sitearchdir\=./.gem.20260424-1136-qdsrua sitelibdir\=./.gem.20260424-1136-qdsrua install
+/usr/bin/install -c -m 0755 bootsnap.so ./.gem.20260424-1136-qdsrua/bootsnap
+
+current directory: C:/Users/admin/Desktop/PhoneLib/vendor/bundle/ruby/3.2.0/gems/bootsnap-1.23.0/ext/bootsnap
+make DESTDIR\= sitearchdir\=./.gem.20260424-1136-qdsrua sitelibdir\=./.gem.20260424-1136-qdsrua clean
