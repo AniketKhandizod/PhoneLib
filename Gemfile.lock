@@ -323,5 +323,8 @@ DEPENDENCIES
   thruster
   tzinfo-data
 
+RUBY VERSION
+   ruby 3.2.8p263
+
 BUNDLED WITH
    2.4.19

@@ -1,6 +1,7 @@
 source "https://rubygems.org"
 
-ruby file: ".ruby-version"
+# Must be a version Bundler can parse; do not use "ruby-3.2.8" (breaks Nixpacks / Railway build).
+ruby "3.2.8"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 8.0.2"

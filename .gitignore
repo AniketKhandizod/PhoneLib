@@ -1,0 +1,50 @@
+# See https://help.github.com/articles/ignoring-files for more about ignoring files.
+
+# NEVER commit the master key — use RAILS_MASTER_KEY on Railway and locally.
+/config/master.key
+/config/credentials/*.key
+
+# Environment
+/.env
+/.env.*
+!.env.example
+
+# Bundler
+/.bundle
+/vendor/bundle
+
+# Log and temp
+/log/*
+/tmp/*
+!/log/.gitkeep
+!/tmp/.gitkeep
+/tmp/pids/*
+!/tmp/pids/.gitkeep
+
+# SQLite
+/storage/*
+!/storage/.gitkeep
+*.sqlite3
+*.sqlite3-*
+
+# Ignore precompiled assets and bootsnap
+/public/assets
+/node_modules
+/tmp/cache/bootsnap*
+
+# App secrets
+/config/local.yml
+
+# IDEs
+/.idea
+/.vscode
+*.swp
+
+# macOS
+.DS_Store
+
+# Ignore uploaded files
+/public/uploads
+
+# Coverage
+/coverage
