@@ -1,0 +1,7 @@
+# Solid Queue recurring tasks (enable Solid Queue + set SOLID_QUEUE_IN_PUMA=1 or run a dedicated worker).
+# Midnight UTC daily — adjust TZ on the host or Railway cron if you need local midnight.
+production:
+  stored_payload_midnight_purge:
+    class: StoredPayloadPurgeJob
+    queue: default
+    schedule: at 12am every day

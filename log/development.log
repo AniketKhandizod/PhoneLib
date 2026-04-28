@@ -1,0 +1,44 @@
+  [1m[35m (2.9ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY) /*application='PhoneLib'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PhoneLib'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20250424000000) /*application='PhoneLib'*/[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL) /*application='PhoneLib'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PhoneLib'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.2ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'development', '2026-04-28 07:49:22.730859', '2026-04-28 07:49:22.730863') RETURNING "key" /*application='PhoneLib'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PhoneLib'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'schema_sha1' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PhoneLib'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.1ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('schema_sha1', 'fca92ff61d3dedc5663585af46ee50c70de417a7', '2026-04-28 07:49:22.737180', '2026-04-28 07:49:22.737182') RETURNING "key" /*application='PhoneLib'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PhoneLib'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PhoneLib'*/[0m
+Migrating to CreateStoredPayloads (20260428120000)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PhoneLib'*/[0m
+  [1m[35m (2.5ms)[0m  [1m[35mCREATE TABLE "stored_payloads" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "payload_json" json, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL) /*application='PhoneLib'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260428120000') RETURNING "version" /*application='PhoneLib'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='PhoneLib'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PhoneLib'*/[0m
+[ActiveJob] [StoredPayloadPurgeJob] [f781fc86-756b-4aac-98af-7273c1944c8a] Performing StoredPayloadPurgeJob (Job ID: f781fc86-756b-4aac-98af-7273c1944c8a) from Async(default)
+[ActiveJob] [StoredPayloadPurgeJob] [f781fc86-756b-4aac-98af-7273c1944c8a] ↳ lib/tasks/payloads.rake:6:in `block (2 levels) in <main>'
+[ActiveJob] [StoredPayloadPurgeJob] [f781fc86-756b-4aac-98af-7273c1944c8a]   [1m[36mStoredPayload Delete All (4.4ms)[0m  [1m[31mDELETE FROM "stored_payloads" /*application='PhoneLib',job='StoredPayloadPurgeJob'*/[0m
+[ActiveJob] [StoredPayloadPurgeJob] [f781fc86-756b-4aac-98af-7273c1944c8a]   ↳ app/jobs/stored_payload_purge_job.rb:8:in `perform'
+[ActiveJob] [StoredPayloadPurgeJob] [f781fc86-756b-4aac-98af-7273c1944c8a] [StoredPayloadPurgeJob] deleted 0 stored payload(s).
+[ActiveJob] [StoredPayloadPurgeJob] [f781fc86-756b-4aac-98af-7273c1944c8a] Performed StoredPayloadPurgeJob (Job ID: f781fc86-756b-4aac-98af-7273c1944c8a) from Async(default) in 301.69ms
+[ActiveJob] [StoredPayloadPurgeJob] [f781fc86-756b-4aac-98af-7273c1944c8a] ↳ lib/tasks/payloads.rake:6:in `block (2 levels) in <main>'
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PhoneLib'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PhoneLib'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PhoneLib'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PhoneLib'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PhoneLib'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PhoneLib'*/[0m
+  [1m[35m (2.5ms)[0m  [1m[35mDROP TABLE IF EXISTS "stored_payloads" /*application='PhoneLib'*/[0m
+  [1m[35m (3.3ms)[0m  [1m[35mCREATE TABLE "stored_payloads" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "payload_json" json, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL) /*application='PhoneLib'*/[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY) /*application='PhoneLib'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PhoneLib'*/[0m
+  [1m[35m (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20260428120000) /*application='PhoneLib'*/[0m
+  [1m[35m (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20250424000000); /*application='PhoneLib'*/[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL) /*application='PhoneLib'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PhoneLib'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.5ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'development', '2026-04-28 07:50:43.482564', '2026-04-28 07:50:43.482574') RETURNING "key" /*application='PhoneLib'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PhoneLib'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Update (0.5ms)[0m  [1m[33mUPDATE "ar_internal_metadata" SET "value" = 'test', "updated_at" = '2026-04-28 07:50:43.495495' WHERE "ar_internal_metadata"."key" = 'environment' /*application='PhoneLib'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'schema_sha1' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PhoneLib'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.4ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('schema_sha1', '54dd9a55b5098603e4de0515dfca13015b5bcec4', '2026-04-28 07:50:43.506700', '2026-04-28 07:50:43.506706') RETURNING "key" /*application='PhoneLib'*/[0m

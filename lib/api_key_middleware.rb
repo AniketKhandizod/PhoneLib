@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
-# GET-only on /api/v1/* and /v1/*. The expected key is ENV["API_KEY"] only (Railway / host env). No default in code.
-# Client: X-Api-Key or Authorization: Bearer (same value). /up is unrestricted. Missing API_KEY env → 503.
+# Protected /api/v1/* and /v1/* paths: API key (ENV["API_KEY"]) via X-Api-Key or Authorization Bearer.
+# GET is default; POST allowed only for storing JSON (see ALLOWED_POST_SUBPATHS).
+# /up is open. Missing API_KEY env → 503.
 class ApiKeyMiddleware
   PROTECTED_PREFIXES = [ "/api/v1", "/v1" ].freeze
+  ALLOWED_POST_SUFFIX = "/stored_payloads".freeze
 
   def initialize(app)
     @app = app
@@ -13,14 +15,16 @@ class ApiKeyMiddleware
     path = env["PATH_INFO"].to_s
     return @app.call(env) unless protected_path?(path)
 
-    unless env["REQUEST_METHOD"].to_s.casecmp("GET").zero?
+    method = env["REQUEST_METHOD"].to_s.upcase
+
+    unless method_allowed?(method, path)
       return json_error(
         env,
         status: 405,
-        headers_extra: { "Allow" => "GET" },
+        headers_extra: { "Allow" => allow_header_for(path) },
         code: "METHOD_NOT_ALLOWED",
-        message: "Only GET is supported on #{path}. Received #{env["REQUEST_METHOD"].to_s.upcase}.",
-        hint: "Use GET /api/v1/phones/random or GET /v1/phones/random."
+        message: "HTTP method #{method} is not allowed on this path.",
+        hint: method_hint(path)
       )
     end
 
@@ -62,6 +66,42 @@ class ApiKeyMiddleware
   end
 
   private
+
+  def method_allowed?(method, path)
+    base = strip_query(path)
+
+    return true if method == "GET"
+
+    return true if method == "POST" && post_store_path?(base)
+
+    false
+  end
+
+  def post_store_path?(base)
+    PROTECTED_PREFIXES.any? { |p| "#{p}#{ALLOWED_POST_SUFFIX}" == base }
+  end
+
+  def allow_header_for(path)
+    base = strip_query(path)
+    if post_store_path?(base)
+      "GET, POST"
+    else
+      "GET"
+    end
+  end
+
+  def method_hint(path)
+    base = strip_query(path)
+    if post_store_path?(base)
+      "Use GET for retrieval, or POST with JSON to #{base} to store a payload."
+    else
+      "Use GET /api/v1/phones/random or stored_payloads endpoints. Store JSON with POST /api/v1/stored_payloads only."
+    end
+  end
+
+  def strip_query(path)
+    path.to_s.split("?", 2).first
+  end
 
   def api_key_from_env
     ENV.fetch("API_KEY", "").to_s.strip.presence

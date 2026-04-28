@@ -10,5 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_24_000000) do
+ActiveRecord::Schema[8.0].define(version: 2026_04_28_120000) do
+  create_table "stored_payloads", force: :cascade do |t|
+    t.json "payload_json"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 end

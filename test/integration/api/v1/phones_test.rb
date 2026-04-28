@@ -75,6 +75,8 @@ class ApiV1PhonesTest < ActionDispatch::IntegrationTest
     assert_response :not_found
     body = response.parsed_body
     assert_equal "ROUTE_NOT_FOUND", body.dig("error", "code")
-    assert_equal "/api/v1/phones/randon", body.dig("error", "details").first["path"]
+    details = body["error"]&.dig("details")
+    assert_instance_of Array, details
+    assert_equal "/api/v1/phones/randon", details.first["path"]
   end
 end

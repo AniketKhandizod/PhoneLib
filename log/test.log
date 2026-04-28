@@ -1403,3 +1403,682 @@ Started GET "/v1/phones/random" for 127.0.0.1 at 2026-04-28 12:56:33 +0530
 Processing by Api::V1::PhonesController#random as JSON
 Completed 200 OK in 40ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
   [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+----------------------------------------------------------------------
+ApiV1StoredPayloadsTest: test_GET_unknown_index_returns_structured_404
+----------------------------------------------------------------------
+  [1m[36mStoredPayload Delete All (0.2ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+Started GET "/api/v1/stored_payloads/99999" for 127.0.0.1 at 2026-04-28 13:20:58 +0530
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-----------------------------------------------------------------------
+ApiV1StoredPayloadsTest: test_POST_without_application/json_returns_415
+-----------------------------------------------------------------------
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+Started POST "/api/v1/stored_payloads" for 127.0.0.1 at 2026-04-28 13:20:58 +0530
+Processing by Api::V1::StoredPayloadsController#create as JSON
+Completed 415 Unsupported Media Type in 15ms (Views: 0.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-----------------------------------------------------------
+ApiV1StoredPayloadsTest: test_purge_job_clears_all_payloads
+-----------------------------------------------------------
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+Started POST "/api/v1/stored_payloads" for 127.0.0.1 at 2026-04-28 13:20:58 +0530
+Processing by Api::V1::StoredPayloadsController#create as JSON
+  Parameters: {"z"=>true, "stored_payload"=>{}}
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mStoredPayload Create (0.3ms)[0m  [1m[32mINSERT INTO "stored_payloads" ("payload_json", "created_at", "updated_at") VALUES (?, ?, ?) RETURNING "id"[0m  [["payload_json", "{\"z\":true}"], ["created_at", "2026-04-28 07:50:58.153282"], ["updated_at", "2026-04-28 07:50:58.153282"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 6ms (Views: 0.2ms | ActiveRecord: 0.6ms (1 query, 0 cached) | GC: 0.0ms)
+  [1m[36mStoredPayload Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "stored_payloads"[0m
+[ActiveJob] [StoredPayloadPurgeJob] [5458cb7d-7d5b-4691-a3fd-8dafe19a6280] Performing StoredPayloadPurgeJob (Job ID: 5458cb7d-7d5b-4691-a3fd-8dafe19a6280) from Test(default)
+[ActiveJob] [StoredPayloadPurgeJob] [5458cb7d-7d5b-4691-a3fd-8dafe19a6280]   [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+[ActiveJob] [StoredPayloadPurgeJob] [5458cb7d-7d5b-4691-a3fd-8dafe19a6280] [StoredPayloadPurgeJob] deleted 1 stored payload(s).
+[ActiveJob] [StoredPayloadPurgeJob] [5458cb7d-7d5b-4691-a3fd-8dafe19a6280] Performed StoredPayloadPurgeJob (Job ID: 5458cb7d-7d5b-4691-a3fd-8dafe19a6280) from Test(default) in 1.05ms
+  [1m[36mStoredPayload Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "stored_payloads"[0m
+  [1m[36mStoredPayload Delete All (0.0ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+------------------------------------------------------------------
+ApiV1StoredPayloadsTest: test_GET_latest_index_reflects_highest_id
+------------------------------------------------------------------
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+Started POST "/api/v1/stored_payloads" for 127.0.0.1 at 2026-04-28 13:20:58 +0530
+Processing by Api::V1::StoredPayloadsController#create as JSON
+  Parameters: {"a"=>1, "stored_payload"=>{}}
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mStoredPayload Create (0.3ms)[0m  [1m[32mINSERT INTO "stored_payloads" ("payload_json", "created_at", "updated_at") VALUES (?, ?, ?) RETURNING "id"[0m  [["payload_json", "{\"a\":1}"], ["created_at", "2026-04-28 07:50:58.163137"], ["updated_at", "2026-04-28 07:50:58.163137"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 2ms (Views: 0.1ms | ActiveRecord: 0.3ms (1 query, 0 cached) | GC: 0.0ms)
+Started POST "/api/v1/stored_payloads" for 127.0.0.1 at 2026-04-28 13:20:58 +0530
+Processing by Api::V1::StoredPayloadsController#create as JSON
+  Parameters: {"b"=>2, "stored_payload"=>{}}
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mStoredPayload Create (0.3ms)[0m  [1m[32mINSERT INTO "stored_payloads" ("payload_json", "created_at", "updated_at") VALUES (?, ?, ?) RETURNING "id"[0m  [["payload_json", "{\"b\":2}"], ["created_at", "2026-04-28 07:50:58.166757"], ["updated_at", "2026-04-28 07:50:58.166757"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 2ms (Views: 0.1ms | ActiveRecord: 0.4ms (1 query, 0 cached) | GC: 0.0ms)
+Started GET "/api/v1/stored_payloads/latest_index" for 127.0.0.1 at 2026-04-28 13:20:58 +0530
+Processing by Api::V1::StoredPayloadsController#latest_index as JSON
+  [1m[36mStoredPayload Maximum (0.1ms)[0m  [1m[34mSELECT MAX("stored_payloads"."id") FROM "stored_payloads"[0m
+Completed 200 OK in 1ms (Views: 0.2ms | ActiveRecord: 0.1ms (1 query, 0 cached) | GC: 0.0ms)
+  [1m[36mStoredPayload Delete All (0.0ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-----------------------------------------------------------
+ApiV1StoredPayloadsTest: test_POST_invalid_JSON_returns_400
+-----------------------------------------------------------
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+Started POST "/api/v1/stored_payloads" for 127.0.0.1 at 2026-04-28 13:20:58 +0530
+Error occurred while parsing request parameters.
+Contents:
+
+{
+Processing by Api::V1::StoredPayloadsController#create as JSON
+Completed 500 Internal Server Error in 0ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+--------------------------------------------------------------
+ApiV1StoredPayloadsTest: test_POST_without_API_key_returns_401
+--------------------------------------------------------------
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+  [1m[36mStoredPayload Delete All (0.0ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+------------------------------------------------------------------------------------------
+ApiV1StoredPayloadsTest: test_POST_stores_JSON_and_returns_index;_GET_returns_same_payload
+------------------------------------------------------------------------------------------
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+Started POST "/api/v1/stored_payloads" for 127.0.0.1 at 2026-04-28 13:20:58 +0530
+Processing by Api::V1::StoredPayloadsController#create as JSON
+  Parameters: {"hello"=>[1, 2, 3], "n"=>nil, "b"=>false, "stored_payload"=>{}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mStoredPayload Create (0.4ms)[0m  [1m[32mINSERT INTO "stored_payloads" ("payload_json", "created_at", "updated_at") VALUES (?, ?, ?) RETURNING "id"[0m  [["payload_json", "{\"hello\":[1,2,3],\"n\":null,\"b\":false}"], ["created_at", "2026-04-28 07:50:58.187194"], ["updated_at", "2026-04-28 07:50:58.187194"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 2ms (Views: 0.1ms | ActiveRecord: 0.5ms (1 query, 0 cached) | GC: 0.0ms)
+Started GET "/api/v1/stored_payloads/1" for 127.0.0.1 at 2026-04-28 13:20:58 +0530
+  
+ActionController::RoutingError (No route matches [GET] "/api/v1/stored_payloads/1"):
+  
+lib/server_access_log_middleware.rb:17:in `call'
+lib/json_parse_errors_middleware.rb:11:in `call'
+lib/api_key_middleware.rb:65:in `call'
+test/integration/api/v1/stored_payloads_test.rb:28:in `block in <class:ApiV1StoredPayloadsTest>'
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+------------------------------------------------------------------------
+ApiV1StoredPayloadsTest: test_/v1_prefix_mirrors_/api/v1_stored_payloads
+------------------------------------------------------------------------
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+Started POST "/v1/stored_payloads" for 127.0.0.1 at 2026-04-28 13:20:58 +0530
+  
+ActionController::RoutingError (No route matches [POST] "/v1/stored_payloads"):
+  
+lib/server_access_log_middleware.rb:17:in `call'
+lib/json_parse_errors_middleware.rb:11:in `call'
+lib/api_key_middleware.rb:65:in `call'
+test/integration/api/v1/stored_payloads_test.rb:91:in `block in <class:ApiV1StoredPayloadsTest>'
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+---------------------------------------------------------------------------
+ApiV1PhonesTest: test_Authorization_Bearer_is_accepted_instead_of_X-Api-Key
+---------------------------------------------------------------------------
+Started GET "/api/v1/phones/random" for 127.0.0.1 at 2026-04-28 13:20:58 +0530
+Processing by Api::V1::PhonesController#random as JSON
+Completed 200 OK in 1010ms (Views: 0.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 2.5ms)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-------------------------------------------------------------------------
+ApiV1PhonesTest: test_unknown_GET_path_returns_structured_404_when_key_OK
+-------------------------------------------------------------------------
+Started GET "/api/v1/phones/randon" for 127.0.0.1 at 2026-04-28 13:20:59 +0530
+  
+ActionController::RoutingError (No route matches [GET] "/api/v1/phones/randon"):
+  
+lib/server_access_log_middleware.rb:17:in `call'
+lib/json_parse_errors_middleware.rb:11:in `call'
+lib/api_key_middleware.rb:65:in `call'
+test/integration/api/v1/phones_test.rb:74:in `block in <class:ApiV1PhonesTest>'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-----------------------------------------------
+ApiV1PhonesTest: test_wrong_API_key_returns_401
+-----------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+--------------------------------------------------------
+ApiV1PhonesTest: test_/v1_shortcut_with_API_key_succeeds
+--------------------------------------------------------
+Started GET "/v1/phones/random" for 127.0.0.1 at 2026-04-28 13:20:59 +0530
+  
+ActionController::RoutingError (No route matches [GET] "/v1/phones/random"):
+  
+lib/server_access_log_middleware.rb:17:in `call'
+lib/json_parse_errors_middleware.rb:11:in `call'
+lib/api_key_middleware.rb:65:in `call'
+test/integration/api/v1/phones_test.rb:65:in `block in <class:ApiV1PhonesTest>'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+---------------------------------------------------------------
+ApiV1PhonesTest: test_POST_returns_405_before_API_key_semantics
+---------------------------------------------------------------
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+--------------------------------------------------------------------
+ApiV1PhonesTest: test_random_GET_with_X-Api-Key_returns_phone_fields
+--------------------------------------------------------------------
+Started GET "/api/v1/phones/random" for 127.0.0.1 at 2026-04-28 13:20:59 +0530
+Processing by Api::V1::PhonesController#random as JSON
+Completed 200 OK in 134ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 1.3ms)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-------------------------------------------------------------
+ApiV1PhonesTest: test_missing_API_key_returns_401_with_reason
+-------------------------------------------------------------
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+--------------------------------------------------------
+ApiV1PhonesTest: test_/health_up_is_not_gated_by_API_key
+--------------------------------------------------------
+Started GET "/up" for 127.0.0.1 at 2026-04-28 13:20:59 +0530
+Processing by Rails::HealthController#show as HTML
+  Rendering html template
+  Rendered html template (Duration: 0.1ms | GC: 0.0ms)
+Completed 200 OK in 35ms (Views: 23.0ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+------------------------------------------------------------------------
+ApiV1StoredPayloadsTest: test_/v1_prefix_mirrors_/api/v1_stored_payloads
+------------------------------------------------------------------------
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+Started POST "/v1/stored_payloads" for 127.0.0.1 at 2026-04-28 13:22:14 +0530
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+------------------------------------------------------------------
+ApiV1StoredPayloadsTest: test_GET_latest_index_reflects_highest_id
+------------------------------------------------------------------
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+Started POST "/api/v1/stored_payloads" for 127.0.0.1 at 2026-04-28 13:22:14 +0530
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+------------------------------------------------------------------------------------------
+ApiV1StoredPayloadsTest: test_POST_stores_JSON_and_returns_index;_GET_returns_same_payload
+------------------------------------------------------------------------------------------
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+Started POST "/api/v1/stored_payloads" for 127.0.0.1 at 2026-04-28 13:22:14 +0530
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-----------------------------------------------------------
+ApiV1StoredPayloadsTest: test_POST_invalid_JSON_returns_400
+-----------------------------------------------------------
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+Started POST "/api/v1/stored_payloads" for 127.0.0.1 at 2026-04-28 13:22:14 +0530
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+----------------------------------------------------------------------
+ApiV1StoredPayloadsTest: test_GET_unknown_index_returns_structured_404
+----------------------------------------------------------------------
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+Started GET "/api/v1/stored_payloads/99999" for 127.0.0.1 at 2026-04-28 13:22:14 +0530
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-----------------------------------------------------------
+ApiV1StoredPayloadsTest: test_purge_job_clears_all_payloads
+-----------------------------------------------------------
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+Started POST "/api/v1/stored_payloads" for 127.0.0.1 at 2026-04-28 13:22:14 +0530
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+--------------------------------------------------------------
+ApiV1StoredPayloadsTest: test_POST_without_API_key_returns_401
+--------------------------------------------------------------
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-----------------------------------------------------------------------
+ApiV1StoredPayloadsTest: test_POST_without_application/json_returns_415
+-----------------------------------------------------------------------
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+Started POST "/api/v1/stored_payloads" for 127.0.0.1 at 2026-04-28 13:22:14 +0530
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+--------------------------------------------------------
+ApiV1PhonesTest: test_/health_up_is_not_gated_by_API_key
+--------------------------------------------------------
+Started GET "/up" for 127.0.0.1 at 2026-04-28 13:22:14 +0530
+Processing by Rails::HealthController#show as HTML
+  Rendering html template
+  Rendered html template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 29ms (Views: 20.7ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.2ms)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+--------------------------------------------------------
+ApiV1PhonesTest: test_/v1_shortcut_with_API_key_succeeds
+--------------------------------------------------------
+Started GET "/v1/phones/random" for 127.0.0.1 at 2026-04-28 13:22:14 +0530
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-------------------------------------------------------------
+ApiV1PhonesTest: test_missing_API_key_returns_401_with_reason
+-------------------------------------------------------------
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+---------------------------------------------------------------
+ApiV1PhonesTest: test_POST_returns_405_before_API_key_semantics
+---------------------------------------------------------------
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+---------------------------------------------------------------------------
+ApiV1PhonesTest: test_Authorization_Bearer_is_accepted_instead_of_X-Api-Key
+---------------------------------------------------------------------------
+Started GET "/api/v1/phones/random" for 127.0.0.1 at 2026-04-28 13:22:14 +0530
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-----------------------------------------------
+ApiV1PhonesTest: test_wrong_API_key_returns_401
+-----------------------------------------------
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+--------------------------------------------------------------------
+ApiV1PhonesTest: test_random_GET_with_X-Api-Key_returns_phone_fields
+--------------------------------------------------------------------
+Started GET "/api/v1/phones/random" for 127.0.0.1 at 2026-04-28 13:22:14 +0530
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-------------------------------------------------------------------------
+ApiV1PhonesTest: test_unknown_GET_path_returns_structured_404_when_key_OK
+-------------------------------------------------------------------------
+Started GET "/api/v1/phones/randon" for 127.0.0.1 at 2026-04-28 13:22:14 +0530
+Processing by Api::V1::RoutingController#not_found as JSON
+  Parameters: {"path"=>"phones/randon"}
+Completed 404 Not Found in 1ms (Views: 0.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-----------------------------------------------------------------------
+ApiV1StoredPayloadsTest: test_POST_without_application/json_returns_415
+-----------------------------------------------------------------------
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+Started POST "/api/v1/stored_payloads" for 127.0.0.1 at 2026-04-28 13:23:07 +0530
+Processing by Api::V1::StoredPayloadsController#create as JSON
+Completed 415 Unsupported Media Type in 23ms (Views: 0.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-----------------------------------------------------------
+ApiV1StoredPayloadsTest: test_POST_invalid_JSON_returns_400
+-----------------------------------------------------------
+  [1m[36mStoredPayload Delete All (0.2ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+Started POST "/api/v1/stored_payloads" for 127.0.0.1 at 2026-04-28 13:23:07 +0530
+Error occurred while parsing request parameters.
+Contents:
+
+{
+Processing by Api::V1::StoredPayloadsController#create as JSON
+Completed 400 Bad Request in 2ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+----------------------------------------------------------------------
+ApiV1StoredPayloadsTest: test_GET_unknown_index_returns_structured_404
+----------------------------------------------------------------------
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+Started GET "/api/v1/stored_payloads/99999" for 127.0.0.1 at 2026-04-28 13:23:07 +0530
+Processing by Api::V1::StoredPayloadsController#show as JSON
+  Parameters: {"index"=>"99999"}
+  [1m[36mStoredPayload Load (0.2ms)[0m  [1m[34mSELECT "stored_payloads".* FROM "stored_payloads" WHERE "stored_payloads"."id" = ? LIMIT ?[0m  [["id", 99999], ["LIMIT", 1]]
+Completed 404 Not Found in 25ms (Views: 0.2ms | ActiveRecord: 0.3ms (1 query, 0 cached) | GC: 0.0ms)
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+------------------------------------------------------------------------
+ApiV1StoredPayloadsTest: test_/v1_prefix_mirrors_/api/v1_stored_payloads
+------------------------------------------------------------------------
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+Started POST "/v1/stored_payloads" for 127.0.0.1 at 2026-04-28 13:23:07 +0530
+Processing by Api::V1::StoredPayloadsController#create as JSON
+  Parameters: {"t"=>9, "stored_payload"=>{}}
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mStoredPayload Create (0.3ms)[0m  [1m[32mINSERT INTO "stored_payloads" ("payload_json", "created_at", "updated_at") VALUES (?, ?, ?) RETURNING "id"[0m  [["payload_json", "{\"t\":9}"], ["created_at", "2026-04-28 07:53:07.325966"], ["updated_at", "2026-04-28 07:53:07.325966"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 6ms (Views: 0.1ms | ActiveRecord: 0.4ms (1 query, 0 cached) | GC: 0.0ms)
+Started GET "/v1/stored_payloads/1" for 127.0.0.1 at 2026-04-28 13:23:07 +0530
+Processing by Api::V1::StoredPayloadsController#show as JSON
+  Parameters: {"index"=>"1"}
+  [1m[36mStoredPayload Load (0.1ms)[0m  [1m[34mSELECT "stored_payloads".* FROM "stored_payloads" WHERE "stored_payloads"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+Completed 200 OK in 2ms (Views: 0.1ms | ActiveRecord: 0.1ms (1 query, 0 cached) | GC: 0.0ms)
+  [1m[36mStoredPayload Delete All (0.0ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+------------------------------------------------------------------
+ApiV1StoredPayloadsTest: test_GET_latest_index_reflects_highest_id
+------------------------------------------------------------------
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+Started POST "/api/v1/stored_payloads" for 127.0.0.1 at 2026-04-28 13:23:07 +0530
+Processing by Api::V1::StoredPayloadsController#create as JSON
+  Parameters: {"a"=>1, "stored_payload"=>{}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mStoredPayload Create (0.5ms)[0m  [1m[32mINSERT INTO "stored_payloads" ("payload_json", "created_at", "updated_at") VALUES (?, ?, ?) RETURNING "id"[0m  [["payload_json", "{\"a\":1}"], ["created_at", "2026-04-28 07:53:07.344142"], ["updated_at", "2026-04-28 07:53:07.344142"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 6ms (Views: 1.6ms | ActiveRecord: 0.6ms (1 query, 0 cached) | GC: 0.0ms)
+Started POST "/api/v1/stored_payloads" for 127.0.0.1 at 2026-04-28 13:23:07 +0530
+Processing by Api::V1::StoredPayloadsController#create as JSON
+  Parameters: {"b"=>2, "stored_payload"=>{}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mStoredPayload Create (0.4ms)[0m  [1m[32mINSERT INTO "stored_payloads" ("payload_json", "created_at", "updated_at") VALUES (?, ?, ?) RETURNING "id"[0m  [["payload_json", "{\"b\":2}"], ["created_at", "2026-04-28 07:53:07.354624"], ["updated_at", "2026-04-28 07:53:07.354624"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 4ms (Views: 0.1ms | ActiveRecord: 0.5ms (1 query, 0 cached) | GC: 0.0ms)
+Started GET "/api/v1/stored_payloads/latest_index" for 127.0.0.1 at 2026-04-28 13:23:07 +0530
+Processing by Api::V1::StoredPayloadsController#latest_index as JSON
+  [1m[36mStoredPayload Maximum (0.2ms)[0m  [1m[34mSELECT MAX("stored_payloads"."id") FROM "stored_payloads"[0m
+Completed 200 OK in 4ms (Views: 0.2ms | ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.0ms)
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+--------------------------------------------------------------
+ApiV1StoredPayloadsTest: test_POST_without_API_key_returns_401
+--------------------------------------------------------------
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+------------------------------------------------------------------------------------------
+ApiV1StoredPayloadsTest: test_POST_stores_JSON_and_returns_index;_GET_returns_same_payload
+------------------------------------------------------------------------------------------
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+Started POST "/api/v1/stored_payloads" for 127.0.0.1 at 2026-04-28 13:23:07 +0530
+Processing by Api::V1::StoredPayloadsController#create as JSON
+  Parameters: {"hello"=>[1, 2, 3], "n"=>nil, "b"=>false, "stored_payload"=>{}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mStoredPayload Create (0.5ms)[0m  [1m[32mINSERT INTO "stored_payloads" ("payload_json", "created_at", "updated_at") VALUES (?, ?, ?) RETURNING "id"[0m  [["payload_json", "{\"hello\":[1,2,3],\"n\":null,\"b\":false}"], ["created_at", "2026-04-28 07:53:07.401461"], ["updated_at", "2026-04-28 07:53:07.401461"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 5ms (Views: 0.3ms | ActiveRecord: 0.6ms (1 query, 0 cached) | GC: 0.0ms)
+Started GET "/api/v1/stored_payloads/1" for 127.0.0.1 at 2026-04-28 13:23:07 +0530
+Processing by Api::V1::StoredPayloadsController#show as JSON
+  Parameters: {"index"=>"1"}
+  [1m[36mStoredPayload Load (0.1ms)[0m  [1m[34mSELECT "stored_payloads".* FROM "stored_payloads" WHERE "stored_payloads"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+Completed 200 OK in 2ms (Views: 0.1ms | ActiveRecord: 0.1ms (1 query, 0 cached) | GC: 0.0ms)
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-----------------------------------------------------------
+ApiV1StoredPayloadsTest: test_purge_job_clears_all_payloads
+-----------------------------------------------------------
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+Started POST "/api/v1/stored_payloads" for 127.0.0.1 at 2026-04-28 13:23:07 +0530
+Processing by Api::V1::StoredPayloadsController#create as JSON
+  Parameters: {"z"=>true, "stored_payload"=>{}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mStoredPayload Create (0.5ms)[0m  [1m[32mINSERT INTO "stored_payloads" ("payload_json", "created_at", "updated_at") VALUES (?, ?, ?) RETURNING "id"[0m  [["payload_json", "{\"z\":true}"], ["created_at", "2026-04-28 07:53:07.425624"], ["updated_at", "2026-04-28 07:53:07.425624"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 3ms (Views: 0.2ms | ActiveRecord: 0.6ms (1 query, 0 cached) | GC: 0.0ms)
+  [1m[36mStoredPayload Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "stored_payloads"[0m
+[ActiveJob] [StoredPayloadPurgeJob] [2d126021-057c-4650-90d8-ec01ac121f2a] Performing StoredPayloadPurgeJob (Job ID: 2d126021-057c-4650-90d8-ec01ac121f2a) from Test(default)
+[ActiveJob] [StoredPayloadPurgeJob] [2d126021-057c-4650-90d8-ec01ac121f2a]   [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+[ActiveJob] [StoredPayloadPurgeJob] [2d126021-057c-4650-90d8-ec01ac121f2a] [StoredPayloadPurgeJob] deleted 1 stored payload(s).
+[ActiveJob] [StoredPayloadPurgeJob] [2d126021-057c-4650-90d8-ec01ac121f2a] Performed StoredPayloadPurgeJob (Job ID: 2d126021-057c-4650-90d8-ec01ac121f2a) from Test(default) in 2.69ms
+  [1m[36mStoredPayload Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "stored_payloads"[0m
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-------------------------------------------------------------------------
+ApiV1PhonesTest: test_unknown_GET_path_returns_structured_404_when_key_OK
+-------------------------------------------------------------------------
+Started GET "/api/v1/phones/randon" for 127.0.0.1 at 2026-04-28 13:23:07 +0530
+Processing by Api::V1::RoutingController#not_found as JSON
+  Parameters: {"path"=>"phones/randon"}
+Completed 404 Not Found in 1ms (Views: 0.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+---------------------------------------------------------------
+ApiV1PhonesTest: test_POST_returns_405_before_API_key_semantics
+---------------------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+---------------------------------------------------------------------------
+ApiV1PhonesTest: test_Authorization_Bearer_is_accepted_instead_of_X-Api-Key
+---------------------------------------------------------------------------
+Started GET "/api/v1/phones/random" for 127.0.0.1 at 2026-04-28 13:23:07 +0530
+Processing by Api::V1::PhonesController#random as JSON
+Completed 200 OK in 418ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 1.1ms)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+--------------------------------------------------------
+ApiV1PhonesTest: test_/health_up_is_not_gated_by_API_key
+--------------------------------------------------------
+Started GET "/up" for 127.0.0.1 at 2026-04-28 13:23:07 +0530
+Processing by Rails::HealthController#show as HTML
+  Rendering html template
+  Rendered html template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 14ms (Views: 9.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+--------------------------------------------------------
+ApiV1PhonesTest: test_/v1_shortcut_with_API_key_succeeds
+--------------------------------------------------------
+Started GET "/v1/phones/random" for 127.0.0.1 at 2026-04-28 13:23:07 +0530
+Processing by Api::V1::PhonesController#random as JSON
+Completed 200 OK in 117ms (Views: 0.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+--------------------------------------------------------------------
+ApiV1PhonesTest: test_random_GET_with_X-Api-Key_returns_phone_fields
+--------------------------------------------------------------------
+Started GET "/api/v1/phones/random" for 127.0.0.1 at 2026-04-28 13:23:08 +0530
+Processing by Api::V1::PhonesController#random as JSON
+Completed 200 OK in 25ms (Views: 0.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-------------------------------------------------------------
+ApiV1PhonesTest: test_missing_API_key_returns_401_with_reason
+-------------------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-----------------------------------------------
+ApiV1PhonesTest: test_wrong_API_key_returns_401
+-----------------------------------------------
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+----------------------------------------------------------------------
+ApiV1StoredPayloadsTest: test_GET_unknown_index_returns_structured_404
+----------------------------------------------------------------------
+  [1m[36mStoredPayload Delete All (0.2ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+Started GET "/api/v1/stored_payloads/99999" for 127.0.0.1 at 2026-04-28 13:23:49 +0530
+Processing by Api::V1::StoredPayloadsController#show as JSON
+  Parameters: {"index"=>"99999"}
+  [1m[36mStoredPayload Load (0.3ms)[0m  [1m[34mSELECT "stored_payloads".* FROM "stored_payloads" WHERE "stored_payloads"."id" = ? LIMIT ?[0m  [["id", 99999], ["LIMIT", 1]]
+Completed 404 Not Found in 28ms (Views: 0.4ms | ActiveRecord: 0.5ms (1 query, 0 cached) | GC: 0.0ms)
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+--------------------------------------------------------------
+ApiV1StoredPayloadsTest: test_POST_without_API_key_returns_401
+--------------------------------------------------------------
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-----------------------------------------------------------------------
+ApiV1StoredPayloadsTest: test_POST_without_application/json_returns_415
+-----------------------------------------------------------------------
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+Started POST "/api/v1/stored_payloads" for 127.0.0.1 at 2026-04-28 13:23:49 +0530
+Processing by Api::V1::StoredPayloadsController#create as JSON
+Completed 415 Unsupported Media Type in 1ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mStoredPayload Delete All (0.0ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+------------------------------------------------------------------
+ApiV1StoredPayloadsTest: test_GET_latest_index_reflects_highest_id
+------------------------------------------------------------------
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+Started POST "/api/v1/stored_payloads" for 127.0.0.1 at 2026-04-28 13:23:49 +0530
+Processing by Api::V1::StoredPayloadsController#create as JSON
+  Parameters: {"a"=>1, "stored_payload"=>{}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mStoredPayload Create (0.5ms)[0m  [1m[32mINSERT INTO "stored_payloads" ("payload_json", "created_at", "updated_at") VALUES (?, ?, ?) RETURNING "id"[0m  [["payload_json", "{\"a\":1}"], ["created_at", "2026-04-28 07:53:49.557513"], ["updated_at", "2026-04-28 07:53:49.557513"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 13ms (Views: 0.2ms | ActiveRecord: 0.6ms (1 query, 0 cached) | GC: 0.0ms)
+Started POST "/api/v1/stored_payloads" for 127.0.0.1 at 2026-04-28 13:23:49 +0530
+Processing by Api::V1::StoredPayloadsController#create as JSON
+  Parameters: {"b"=>2, "stored_payload"=>{}}
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mStoredPayload Create (0.2ms)[0m  [1m[32mINSERT INTO "stored_payloads" ("payload_json", "created_at", "updated_at") VALUES (?, ?, ?) RETURNING "id"[0m  [["payload_json", "{\"b\":2}"], ["created_at", "2026-04-28 07:53:49.562587"], ["updated_at", "2026-04-28 07:53:49.562587"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 2ms (Views: 0.1ms | ActiveRecord: 0.3ms (1 query, 0 cached) | GC: 0.0ms)
+Started GET "/api/v1/stored_payloads/latest_index" for 127.0.0.1 at 2026-04-28 13:23:49 +0530
+Processing by Api::V1::StoredPayloadsController#latest_index as JSON
+  [1m[36mStoredPayload Maximum (0.1ms)[0m  [1m[34mSELECT MAX("stored_payloads"."id") FROM "stored_payloads"[0m
+Completed 200 OK in 1ms (Views: 0.2ms | ActiveRecord: 0.1ms (1 query, 0 cached) | GC: 0.0ms)
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-----------------------------------------------------------
+ApiV1StoredPayloadsTest: test_POST_invalid_JSON_returns_400
+-----------------------------------------------------------
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+Started POST "/api/v1/stored_payloads" for 127.0.0.1 at 2026-04-28 13:23:49 +0530
+Error occurred while parsing request parameters.
+Contents:
+
+{
+Processing by Api::V1::StoredPayloadsController#create as JSON
+Completed 400 Bad Request in 1ms (Views: 0.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-----------------------------------------------------------
+ApiV1StoredPayloadsTest: test_purge_job_clears_all_payloads
+-----------------------------------------------------------
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+Started POST "/api/v1/stored_payloads" for 127.0.0.1 at 2026-04-28 13:23:49 +0530
+Processing by Api::V1::StoredPayloadsController#create as JSON
+  Parameters: {"z"=>true, "stored_payload"=>{}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mStoredPayload Create (1.7ms)[0m  [1m[32mINSERT INTO "stored_payloads" ("payload_json", "created_at", "updated_at") VALUES (?, ?, ?) RETURNING "id"[0m  [["payload_json", "{\"z\":true}"], ["created_at", "2026-04-28 07:53:49.600985"], ["updated_at", "2026-04-28 07:53:49.600985"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 5ms (Views: 0.1ms | ActiveRecord: 1.8ms (1 query, 0 cached) | GC: 0.0ms)
+  [1m[36mStoredPayload Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "stored_payloads"[0m
+[ActiveJob] [StoredPayloadPurgeJob] [caf72261-3d13-4a27-a7ae-2b3d6da37fdf] Performing StoredPayloadPurgeJob (Job ID: caf72261-3d13-4a27-a7ae-2b3d6da37fdf) from Test(default)
+[ActiveJob] [StoredPayloadPurgeJob] [caf72261-3d13-4a27-a7ae-2b3d6da37fdf]   [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+[ActiveJob] [StoredPayloadPurgeJob] [caf72261-3d13-4a27-a7ae-2b3d6da37fdf] [StoredPayloadPurgeJob] deleted 1 stored payload(s).
+[ActiveJob] [StoredPayloadPurgeJob] [caf72261-3d13-4a27-a7ae-2b3d6da37fdf] Performed StoredPayloadPurgeJob (Job ID: caf72261-3d13-4a27-a7ae-2b3d6da37fdf) from Test(default) in 3.35ms
+  [1m[36mStoredPayload Count (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "stored_payloads"[0m
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+------------------------------------------------------------------------------------------
+ApiV1StoredPayloadsTest: test_POST_stores_JSON_and_returns_index;_GET_returns_same_payload
+------------------------------------------------------------------------------------------
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+Started POST "/api/v1/stored_payloads" for 127.0.0.1 at 2026-04-28 13:23:49 +0530
+Processing by Api::V1::StoredPayloadsController#create as JSON
+  Parameters: {"hello"=>[1, 2, 3], "n"=>nil, "b"=>false, "stored_payload"=>{}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mStoredPayload Create (3.3ms)[0m  [1m[32mINSERT INTO "stored_payloads" ("payload_json", "created_at", "updated_at") VALUES (?, ?, ?) RETURNING "id"[0m  [["payload_json", "{\"hello\":[1,2,3],\"n\":null,\"b\":false}"], ["created_at", "2026-04-28 07:53:49.630626"], ["updated_at", "2026-04-28 07:53:49.630626"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 5ms (Views: 0.1ms | ActiveRecord: 3.4ms (1 query, 0 cached) | GC: 0.0ms)
+Started GET "/api/v1/stored_payloads/1" for 127.0.0.1 at 2026-04-28 13:23:49 +0530
+Processing by Api::V1::StoredPayloadsController#show as JSON
+  Parameters: {"index"=>"1"}
+  [1m[36mStoredPayload Load (0.1ms)[0m  [1m[34mSELECT "stored_payloads".* FROM "stored_payloads" WHERE "stored_payloads"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+Completed 200 OK in 2ms (Views: 0.2ms | ActiveRecord: 0.1ms (1 query, 0 cached) | GC: 0.0ms)
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+------------------------------------------------------------------------
+ApiV1StoredPayloadsTest: test_/v1_prefix_mirrors_/api/v1_stored_payloads
+------------------------------------------------------------------------
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+Started POST "/v1/stored_payloads" for 127.0.0.1 at 2026-04-28 13:23:49 +0530
+Processing by Api::V1::StoredPayloadsController#create as JSON
+  Parameters: {"t"=>9, "stored_payload"=>{}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mStoredPayload Create (0.3ms)[0m  [1m[32mINSERT INTO "stored_payloads" ("payload_json", "created_at", "updated_at") VALUES (?, ?, ?) RETURNING "id"[0m  [["payload_json", "{\"t\":9}"], ["created_at", "2026-04-28 07:53:49.656555"], ["updated_at", "2026-04-28 07:53:49.656555"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 2ms (Views: 0.1ms | ActiveRecord: 0.4ms (1 query, 0 cached) | GC: 0.0ms)
+Started GET "/v1/stored_payloads/1" for 127.0.0.1 at 2026-04-28 13:23:49 +0530
+Processing by Api::V1::StoredPayloadsController#show as JSON
+  Parameters: {"index"=>"1"}
+  [1m[36mStoredPayload Load (0.2ms)[0m  [1m[34mSELECT "stored_payloads".* FROM "stored_payloads" WHERE "stored_payloads"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+Completed 200 OK in 2ms (Views: 0.2ms | ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.0ms)
+  [1m[36mStoredPayload Delete All (0.1ms)[0m  [1m[31mDELETE FROM "stored_payloads"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+---------------------------------------------------------------------------
+ApiV1PhonesTest: test_Authorization_Bearer_is_accepted_instead_of_X-Api-Key
+---------------------------------------------------------------------------
+Started GET "/api/v1/phones/random" for 127.0.0.1 at 2026-04-28 13:23:49 +0530
+Processing by Api::V1::PhonesController#random as JSON
+Completed 200 OK in 505ms (Views: 0.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 1.3ms)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+--------------------------------------------------------------------
+ApiV1PhonesTest: test_random_GET_with_X-Api-Key_returns_phone_fields
+--------------------------------------------------------------------
+Started GET "/api/v1/phones/random" for 127.0.0.1 at 2026-04-28 13:23:50 +0530
+Processing by Api::V1::PhonesController#random as JSON
+Completed 200 OK in 16ms (Views: 0.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-------------------------------------------------------------------------
+ApiV1PhonesTest: test_unknown_GET_path_returns_structured_404_when_key_OK
+-------------------------------------------------------------------------
+Started GET "/api/v1/phones/randon" for 127.0.0.1 at 2026-04-28 13:23:50 +0530
+Processing by Api::V1::RoutingController#not_found as JSON
+  Parameters: {"path"=>"phones/randon"}
+Completed 404 Not Found in 1ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+--------------------------------------------------------
+ApiV1PhonesTest: test_/v1_shortcut_with_API_key_succeeds
+--------------------------------------------------------
+Started GET "/v1/phones/random" for 127.0.0.1 at 2026-04-28 13:23:50 +0530
+Processing by Api::V1::PhonesController#random as JSON
+Completed 200 OK in 32ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+---------------------------------------------------------------
+ApiV1PhonesTest: test_POST_returns_405_before_API_key_semantics
+---------------------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-----------------------------------------------
+ApiV1PhonesTest: test_wrong_API_key_returns_401
+-----------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-------------------------------------------------------------
+ApiV1PhonesTest: test_missing_API_key_returns_401_with_reason
+-------------------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+--------------------------------------------------------
+ApiV1PhonesTest: test_/health_up_is_not_gated_by_API_key
+--------------------------------------------------------
+Started GET "/up" for 127.0.0.1 at 2026-04-28 13:23:50 +0530
+Processing by Rails::HealthController#show as HTML
+  Rendering html template
+  Rendered html template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 16ms (Views: 9.0ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m

@@ -14,6 +14,16 @@ module Api
 
       private
 
+      def render_invalid_stored_payload(exception)
+        code = exception.respond_to?(:code) ? exception.code : "INVALID_PAYLOAD"
+        render_error(
+          code: code,
+          message: exception.message.to_s.truncate(500),
+          status: :bad_request,
+          hint: "POST valid JSON to /api/v1/stored_payloads with Content-Type: application/json."
+        )
+      end
+
       def render_generation_failed(exception)
         render_error(
           code: "GENERATION_FAILED",
@@ -38,7 +48,7 @@ module Api
               message: "This parameter must be present for this endpoint (query string for GET, JSON for POST)."
             }
           ],
-          hint: "This API only exposes GET /api/v1/phones/random (no required query parameters)."
+          hint: "See API routes: phones/random, stored_payloads, stored_payloads/:index, stored_payloads/latest_index."
         )
       end
 
@@ -48,7 +58,7 @@ module Api
           message: "JSON parse failed: #{exception.message.to_s.truncate(400)}",
           status: :bad_request,
           details: [ { message: exception.message.to_s } ],
-          hint: "This service is GET-only; you should not need a JSON body for the phone random endpoint."
+          hint: "Use POST /api/v1/stored_payloads with a JSON body when sending JSON; ensure valid syntax."
         )
       end
 
@@ -62,7 +72,9 @@ module Api
       end
 
       def render_unexpected_error(exception)
-        raise exception if Rails.application.config.consider_all_requests_local
+        raise exception if Rails.application.config.consider_all_requests_local && !exception.is_a?(StoredPayloadStore::InvalidPayloadError)
+
+        return render_invalid_stored_payload(exception) if exception.is_a?(StoredPayloadStore::InvalidPayloadError)
 
         Rails.logger.error("[#{exception.class}] #{exception.message}\n#{exception.backtrace&.first(20)&.join("\n")}")
         render_error(
