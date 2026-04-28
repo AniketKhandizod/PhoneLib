@@ -1,7 +1,12 @@
 require "active_support/core_ext/integer/time"
+require "securerandom"
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
+
+  # Railway / Docker: set SECRET_KEY_BASE in the service environment for a stable value across restarts.
+  # If unset, a random key is generated at boot (fine for this stateless JSON API; cookies not used).
+  config.secret_key_base = ENV.fetch("SECRET_KEY_BASE") { SecureRandom.hex(64) }
 
   # Code is not reloaded between requests.
   config.enable_reloading = false

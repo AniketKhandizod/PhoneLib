@@ -3,12 +3,10 @@ Rails.application.routes.draw do
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
 
-  # Shared v1 phone endpoints (canonical prefix: /api/v1/...). Also exposed at /v1/... for clients that omit /api.
+  # GET-only: random Phonelib-valid phone for a random country. Also at /v1/... if /api is omitted.
   concern :api_v1_phone_routes do
     get "phones/random", to: "phones#random"
-    get "phones/lookup", to: "phones#lookup"
-    post "phones/validate", to: "phones#validate"
-    match "*path", to: "routing#not_found", via: :all
+    match "*path", to: "routing#not_found", via: :get
   end
 
   namespace :api do

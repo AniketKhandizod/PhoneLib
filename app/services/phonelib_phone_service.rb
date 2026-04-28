@@ -1,20 +1,9 @@
 # frozen_string_literal: true
 
-# All phone operations use the phonelib gem only (libphonenumber data).
-# Random numbers are generated then re-validated with Phonelib before use.
+# Random E.164 numbers using the phonelib gem (libphonenumber). Each candidate is verified with Phonelib
+# before it is returned; only valid numbers are exposed.
 class PhonelibPhoneService
   class RandomGenerationError < StandardError; end
-
-  # Raised for client input / validation issues. Carries optional field + stable code for API details[].
-  class InvalidRequestError < StandardError
-    attr_reader :field, :error_code
-
-    def initialize(message, field: nil, error_code: "VALIDATION_ERROR")
-      super(message)
-      @field = field&.to_s
-      @error_code = error_code.to_s.upcase
-    end
-  end
 
   MAX_GENERATION_ATTEMPTS = 2_000
   NATIONAL_DIGIT_BOUNDS = (7..12).freeze
@@ -31,99 +20,12 @@ class PhonelibPhoneService
         payload = verified_payload(phone)
         next unless payload
 
-        # verified_payload already checks Phonelib; re-check E.164 before returning so only valid numbers exit the API.
-        final = Phonelib.parse(payload[:phone].to_s)
+        final = Phonelib.parse(payload[:phone_number].to_s)
         next unless final.valid? && Phonelib.valid?(final.sanitized)
 
         return payload
       end
       raise RandomGenerationError, "Could not generate a phonelib-verified number after #{MAX_GENERATION_ATTEMPTS} attempts"
-    end
-
-    def lookup(phone_str:, country_iso2:)
-      normalized_country = normalize_country_code(country_iso2)
-      input = phone_str.to_s.strip
-      raise InvalidRequestError.new("phone is required", field: "phone", error_code: "PHONE_REQUIRED") if input.empty?
-
-      phone = Phonelib.parse(input, normalized_country)
-      unless phone.valid? && phone.valid_for_country?(normalized_country) && Phonelib.valid?(phone.sanitized)
-        raise InvalidRequestError.new(
-          "Not a valid phone number for the given country",
-          field: "phone",
-          error_code: "INVALID_PHONE_FOR_COUNTRY"
-        )
-      end
-
-      unless phone.country == normalized_country
-        raise InvalidRequestError.new(
-          "Number does not belong to the specified country",
-          field: "phone",
-          error_code: "PHONE_COUNTRY_MISMATCH"
-        )
-      end
-
-      verified_payload(phone) || raise(
-        InvalidRequestError.new(
-          "Number could not be re-verified by phonelib",
-          field: "phone",
-          error_code: "PHONE_VERIFICATION_FAILED"
-        )
-      )
-    end
-
-    def validate(national_or_full:, country_dialing_code:)
-      dialing = country_dialing_code.to_s.strip.delete_prefix("+")
-      raise InvalidRequestError.new(
-        "country_code is required",
-        field: "country_code",
-        error_code: "COUNTRY_CODE_REQUIRED"
-      ) if dialing.empty?
-
-      raise InvalidRequestError.new(
-        "phone is required",
-        field: "phone",
-        error_code: "PHONE_REQUIRED"
-      ) if national_or_full.to_s.strip.empty?
-
-      unless /\A\d+\z/.match?(dialing)
-        raise InvalidRequestError.new(
-          "country_code must contain digits only",
-          field: "country_code",
-          error_code: "INVALID_COUNTRY_CODE_FORMAT"
-        )
-      end
-
-      national = national_or_full.to_s.strip.gsub(/\D/, "")
-      if national.empty?
-        raise InvalidRequestError.new(
-          "phone must contain digits",
-          field: "phone",
-          error_code: "INVALID_PHONE_FORMAT"
-        )
-      end
-
-      unless find_main_country_for_dialing(dialing)
-        raise InvalidRequestError.new(
-          "Unknown or ambiguous country_code (try ISO country on the lookup endpoint)",
-          field: "country_code",
-          error_code: "UNKNOWN_OR_AMBIGUOUS_COUNTRY_CODE"
-        )
-      end
-
-      e164 = "+#{dialing}#{national}"
-      phone = Phonelib.parse(e164)
-
-      if phone.valid? && Phonelib.valid?(phone.sanitized) && phone.country_code == dialing
-        {
-          valid: true,
-          **payload_from_phone(phone)
-        }
-      else
-        {
-          valid: false,
-          reason: "Number is not a valid E.164 number for the given country code"
-        }
-      end
     end
 
     def verified_payload(phone)
@@ -138,46 +40,13 @@ class PhonelibPhoneService
 
     def payload_from_phone(phone)
       {
-        phone: phone.e164,
+        phone_number: phone.e164,
         country_code: phone.country_code,
-        country_name: phone.valid_country_name.presence || phone.country,
-        short_country_name: phone.country
+        country_name: phone.valid_country_name.presence || phone.country
       }
     end
 
     private
-
-    def normalize_country_code(country)
-      c = country.to_s.strip.upcase
-      unless /\A[A-Z]{2}\z/.match?(c)
-        raise InvalidRequestError.new(
-          "country must be a 2-letter ISO code",
-          field: "country",
-          error_code: "INVALID_COUNTRY_ISO_FORMAT"
-        )
-      end
-
-      unless Phonelib.phone_data.key?(c)
-        raise InvalidRequestError.new(
-          "Unknown country",
-          field: "country",
-          error_code: "UNKNOWN_COUNTRY"
-        )
-      end
-
-      c
-    end
-
-    def find_main_country_for_dialing(dialing)
-      candidates = Phonelib.data_by_country_codes[dialing] || []
-      if candidates.size == 1
-        return candidates.first[:id]
-      end
-
-      # Prefer the record marked as main (e.g. +1 => US; still ambiguous for national parsing).
-      main = candidates.find { |c| c[:main_country_for_code] == "true" }
-      main&.fetch(:id, nil) || candidates.first&.fetch(:id, nil)
-    end
 
     def build_valid_for_country(country)
       MUTATION_ATTEMPTS.times do
@@ -217,7 +86,6 @@ class PhonelibPhoneService
       min_l, max_l = national_length_bounds(country)
       len = rand(min_l..max_l)
       national = (1..len).map { rand(0..9).to_s }.join
-      # Avoid leading zero when lib expects non-zero; extra parse pass will still reject
       Phonelib.parse(national, country)
     end
 

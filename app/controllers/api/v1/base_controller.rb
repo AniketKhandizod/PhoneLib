@@ -5,7 +5,6 @@ module Api
     class BaseController < ApplicationController
       include ApiRenderable
 
-      rescue_from PhonelibPhoneService::InvalidRequestError, with: :render_invalid_request
       rescue_from PhonelibPhoneService::RandomGenerationError, with: :render_generation_failed
       rescue_from ActionController::ParameterMissing, with: :render_parameter_missing
       rescue_from ActionDispatch::Http::Parameters::ParseError, with: :render_parse_error
@@ -14,24 +13,6 @@ module Api
       rescue_from StandardError, with: :render_unexpected_error
 
       private
-
-      def render_invalid_request(exception)
-        field_ctx = exception.field.present? ? " (field: #{exception.field})" : ""
-        detail = {
-          code: exception.error_code,
-          message: exception.message
-        }
-        detail[:field] = exception.field if exception.field.present?
-
-        render_error(
-          code: "VALIDATION_ERROR",
-          message: "#{exception.message}#{field_ctx} [code: #{exception.error_code}]",
-          status: :unprocessable_entity,
-          details: [ detail ],
-          hint: "The request was rejected because input did not pass Phonelib validation rules. " \
-                "See error.details for the field and stable error_code."
-        )
-      end
 
       def render_generation_failed(exception)
         render_error(
@@ -57,7 +38,7 @@ module Api
               message: "This parameter must be present for this endpoint (query string for GET, JSON for POST)."
             }
           ],
-          hint: "lookup needs ?phone=…&country=… ; validate needs JSON keys phone and country_code."
+          hint: "This API only exposes GET /api/v1/phones/random (no required query parameters)."
         )
       end
 
@@ -67,7 +48,7 @@ module Api
           message: "JSON parse failed: #{exception.message.to_s.truncate(400)}",
           status: :bad_request,
           details: [ { message: exception.message.to_s } ],
-          hint: "Send Content-Type: application/json with syntactically valid JSON (double-quoted keys, matching braces)."
+          hint: "This service is GET-only; you should not need a JSON body for the phone random endpoint."
         )
       end
 

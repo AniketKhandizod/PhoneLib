@@ -1056,3 +1056,50 @@ Started GET "/api/v1/phones/random" for 127.0.0.1 at 2026-04-28 11:51:03 +0530
 Processing by Api::V1::PhonesController#random as HTML
 Completed 200 OK in 51ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
   [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-------------------------------------------------------------------------------------
+ApiV1PhonesTest: test_/health_up_is_not_IP-gated_or_method-filtered_by_API_middleware
+-------------------------------------------------------------------------------------
+Started GET "/up" for 127.0.0.1 at 2026-04-28 12:03:24 +0530
+Processing by Rails::HealthController#show as HTML
+  Rendering html template
+  Rendered html template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 13ms (Views: 8.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+--------------------------------------------------------------------------------------------
+ApiV1PhonesTest: test_random_GET_returns_phone_number_country_code_country_name_via_phonelib
+--------------------------------------------------------------------------------------------
+Started GET "/api/v1/phones/random" for 127.0.0.1 at 2026-04-28 12:03:24 +0530
+Processing by Api::V1::PhonesController#random as HTML
+Completed 200 OK in 867ms (Views: 0.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 1.4ms)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-------------------------------------------------------------
+ApiV1PhonesTest: test_unknown_GET_path_returns_structured_404
+-------------------------------------------------------------
+Started GET "/api/v1/phones/randon" for 127.0.0.1 at 2026-04-28 12:03:25 +0530
+Processing by Api::V1::RoutingController#not_found as HTML
+  Parameters: {"path"=>"phones/randon"}
+Completed 404 Not Found in 1ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-------------------------------------------------------------------
+ApiV1PhonesTest: test_disallowed_client_IP_receives_403_with_reason
+-------------------------------------------------------------------
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-----------------------------------------------------------
+ApiV1PhonesTest: test_/v1_shortcut_equals_/api/v1_behaviour
+-----------------------------------------------------------
+Started GET "/v1/phones/random" for 127.0.0.1 at 2026-04-28 12:03:25 +0530
+Processing by Api::V1::PhonesController#random as HTML
+Completed 200 OK in 60ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+------------------------------------------------------------
+ApiV1PhonesTest: test_POST_returns_405_with_descriptive_JSON
+------------------------------------------------------------
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m

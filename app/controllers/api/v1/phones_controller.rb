@@ -3,36 +3,9 @@
 module Api
   module V1
     class PhonesController < BaseController
-      # GET /api/v1/phones/random
+      # GET /api/v1/phones/random  (or GET /v1/phones/random)
       def random
         render_success data: PhonelibPhoneService.random_valid
-      end
-
-      # GET /api/v1/phones/lookup?phone=&country=
-      def lookup
-        render_success data: PhonelibPhoneService.lookup(
-          phone_str: params.require(:phone),
-          country_iso2: params.require(:country)
-        )
-      end
-
-      # POST /api/v1/phones/validate
-      # JSON: { "phone": "7972708841", "country_code": "91" }
-      def validate
-        p = validate_params
-        render_success data: PhonelibPhoneService.validate(
-          national_or_full: p[:phone],
-          country_dialing_code: p[:country_code]
-        )
-      end
-
-      private
-
-      def validate_params
-        p = params.permit(:phone, :country_code)
-        p.require(:phone)
-        p.require(:country_code)
-        p
       end
     end
   end

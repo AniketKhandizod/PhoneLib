@@ -9,8 +9,7 @@ module Api
       def not_found
         render_error(
           code: "ROUTE_NOT_FOUND",
-          message: "No route definition for #{request.request_method} #{request.path}. " \
-                   "Valid examples: GET /api/v1/phones/random or GET /v1/phones/random, GET …/lookup, POST …/validate.",
+          message: "No GET route for #{request.path}. Use GET /api/v1/phones/random or GET /v1/phones/random.",
           status: :not_found,
           details: [
             {

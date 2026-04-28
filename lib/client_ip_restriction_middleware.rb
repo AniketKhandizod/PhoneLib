@@ -16,6 +16,11 @@ class ClientIpRestrictionMiddleware
 
     return @app.call(env) unless protected_api_path?(path)
 
+    unless env["REQUEST_METHOD"].to_s.casecmp("GET").zero?
+      request_early = ActionDispatch::Request.new(env)
+      return method_not_allowed_payload(env, request_early)
+    end
+
     request = ActionDispatch::Request.new(env)
     return @app.call(env) if client_ip_allowed?(request)
 
@@ -54,6 +59,33 @@ class ClientIpRestrictionMiddleware
     IPAddr.new(seen) == IPAddr.new(allowed)
   rescue IPAddr::InvalidAddressError
     seen == allowed
+  end
+
+  def method_not_allowed_payload(env, request)
+    allowed_methods = "GET"
+    method = env["REQUEST_METHOD"].to_s.upcase
+    rid = request.request_id || env["action_dispatch.request_id"]
+
+    body = {
+      success: false,
+      meta: {
+        request_id: rid,
+        timestamp: Time.current.iso8601(3)
+      },
+      error: {
+        code: "METHOD_NOT_ALLOWED",
+        message: "Only #{allowed_methods} is supported on #{request.path}. Received #{method}.",
+        hint: "This API is read-only. Use GET /api/v1/phones/random or GET /v1/phones/random."
+      }
+    }
+    json = ActiveSupport::JSON.encode(body)
+    headers = Rack::Headers.new.tap do |h|
+      h["Content-Type"] = "application/json; charset=UTF-8"
+      h["Content-Length"] = json.bytesize.to_s
+      h["Allow"] = allowed_methods
+    end
+
+    [ 405, headers, [ json ] ]
   end
 
   def forbidden_payload(env, request)
