@@ -27,6 +27,13 @@ class ApiV1PhonesTest < ActionDispatch::IntegrationTest
     assert_predicate body.dig("error", "hint"), :present?
   end
 
+  test "/v1 shortcut prefix matches canonical /api/v1 behaviour" do
+    get "/v1/phones/random", headers: @headers
+    assert_response :success
+    assert response.parsed_body.dig("data", "phone").to_s.start_with?("+"),
+      "expected #{response.parsed_body.inspect}"
+  end
+
   test "random phone returns e164 and fields" do
     get "/api/v1/phones/random", headers: @headers
     assert_response :success
