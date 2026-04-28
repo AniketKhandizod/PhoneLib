@@ -2,17 +2,17 @@
 
 # Loaded explicitly (not via Zeitwerk) so it is available when initializers run.
 require Rails.root.join("lib/server_access_log_middleware").to_s
-require Rails.root.join("lib/client_ip_restriction_middleware").to_s
+require Rails.root.join("lib/api_key_middleware").to_s
 require Rails.root.join("lib/json_parse_errors_middleware").to_s
 
-# Order: RequestId → IP allowlist → JSON parse errors → access log → app
+# Order: RequestId → API key gate (GET-only on /api/v1, /v1) → JSON parse errors → access log → app
 Rails.application.config.middleware.insert_after(
   ActionDispatch::RequestId,
-  ClientIpRestrictionMiddleware
+  ApiKeyMiddleware
 )
 
 Rails.application.config.middleware.insert_after(
-  ClientIpRestrictionMiddleware,
+  ApiKeyMiddleware,
   JsonParseErrorsMiddleware
 )
 

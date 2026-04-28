@@ -1,6 +1,5 @@
 ENV["RAILS_ENV"] ||= "test"
-# Integration tests run from 127.0.0.1; production default 27.107.44.138 would block them.
-ENV["ALLOWED_CLIENT_IP"] ||= "127.0.0.1"
+ENV["API_KEY"] ||= "integration-test-api-key-secret"
 
 require_relative "../config/environment"
 require "rails/test_help"

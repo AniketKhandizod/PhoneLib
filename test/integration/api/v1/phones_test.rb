@@ -3,25 +3,45 @@
 require "test_helper"
 
 class ApiV1PhonesTest < ActionDispatch::IntegrationTest
+  setup do
+    @key_headers = {
+      "X-Api-Key" => ENV.fetch("API_KEY", "XYZ789rk@@@"),
+      "Accept" => "application/json"
+    }
+  end
+
   def data(payload)
     payload["data"] || payload
   end
 
-  test "disallowed client IP receives 403 with reason" do
-    get "/api/v1/phones/random", env: { "REMOTE_ADDR" => "203.0.113.99" }
-    assert_response :forbidden
+  test "missing API key returns 401 with reason" do
+    get "/api/v1/phones/random"
+    assert_response :unauthorized
     body = response.parsed_body
-    assert_equal "FORBIDDEN_CLIENT_IP", body.dig("error", "code")
-    assert_match "203.0.113.99", body.dig("error", "message").to_s
-    assert_match "127.0.0.1", body.dig("error", "message").to_s
+    assert_equal "API_KEY_MISSING", body.dig("error", "code")
+    assert_predicate body.dig("error", "hint"), :present?
   end
 
-  test "/health up is not IP-gated or method-filtered by API middleware" do
+  test "wrong API key returns 401" do
+    get "/api/v1/phones/random", headers: @key_headers.merge("X-Api-Key" => "not-valid")
+    assert_response :unauthorized
+    assert_equal "API_KEY_INVALID", response.parsed_body.dig("error", "code")
+  end
+
+  test "Authorization Bearer is accepted instead of X-Api-Key" do
+    token = ENV.fetch("API_KEY")
+    get "/api/v1/phones/random",
+      headers: { "Authorization" => "Bearer #{token}", "Accept" => "application/json" }
+    assert_response :success
+    assert_predicate response.parsed_body.dig("data", "phone_number"), :present?
+  end
+
+  test "/health up is not gated by API key" do
     get "/up"
     assert_includes [ 200, 500 ], response.status
   end
 
-  test "POST returns 405 with descriptive JSON" do
+  test "POST returns 405 before API key semantics" do
     post "/api/v1/phones/random"
     assert_response 405
     body = response.parsed_body
@@ -29,8 +49,8 @@ class ApiV1PhonesTest < ActionDispatch::IntegrationTest
     assert_match "POST", body.dig("error", "message").to_s
   end
 
-  test "random GET returns phone_number country_code country_name via phonelib" do
-    get "/api/v1/phones/random"
+  test "random GET with X-Api-Key returns phone fields" do
+    get "/api/v1/phones/random", headers: @key_headers
     assert_response :success
     j = response.parsed_body
     d = data(j)
@@ -41,8 +61,8 @@ class ApiV1PhonesTest < ActionDispatch::IntegrationTest
     assert_equal true, j["success"]
   end
 
-  test "/v1 shortcut equals /api/v1 behaviour" do
-    get "/v1/phones/random"
+  test "/v1 shortcut with API key succeeds" do
+    get "/v1/phones/random", headers: @key_headers
     assert_response :success
     d = response.parsed_body["data"]
     assert d["phone_number"].to_s.start_with?("+")
@@ -50,8 +70,8 @@ class ApiV1PhonesTest < ActionDispatch::IntegrationTest
     assert d["country_name"].present?
   end
 
-  test "unknown GET path returns structured 404" do
-    get "/api/v1/phones/randon"
+  test "unknown GET path returns structured 404 when key OK" do
+    get "/api/v1/phones/randon", headers: @key_headers
     assert_response :not_found
     body = response.parsed_body
     assert_equal "ROUTE_NOT_FOUND", body.dig("error", "code")
