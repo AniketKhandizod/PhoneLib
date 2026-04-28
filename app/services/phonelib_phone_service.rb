@@ -1,9 +1,14 @@
 # frozen_string_literal: true
 
-# Random E.164 numbers using the phonelib gem (libphonenumber). Each candidate is verified with Phonelib
-# before it is returned; only valid numbers are exposed.
+# Random E.164-backed numbers via phonelib/libphonenumber. Validates before returning.
 class PhonelibPhoneService
   class RandomGenerationError < StandardError; end
+
+  # Optional Sell.do-compatible labels keyed by ISO 3166-1 alpha-2 (uppercase).
+  # Phonelib’s English names are used when absent (typically match CRM “country” pickers).
+  SELL_DO_COUNTRY_LABEL_OVERRIDES = {
+    # Example: "IN" => "India"
+  }.freeze
 
   MAX_GENERATION_ATTEMPTS = 2_000
   NATIONAL_DIGIT_BOUNDS = (7..12).freeze
@@ -18,15 +23,12 @@ class PhonelibPhoneService
         next if phone.nil?
 
         payload = verified_payload(phone)
-        next unless payload
-
-        final = Phonelib.parse(payload[:phone_number].to_s)
-        next unless final.valid? && Phonelib.valid?(final.sanitized)
-
-        return payload
+        return payload if payload
       end
       raise RandomGenerationError, "Could not generate a phonelib-verified number after #{MAX_GENERATION_ATTEMPTS} attempts"
     end
+
+    private
 
     def verified_payload(phone)
       return nil unless phone.is_a?(Phonelib::Phone)
@@ -40,13 +42,22 @@ class PhonelibPhoneService
 
     def payload_from_phone(phone)
       {
-        phone_number: phone.e164,
-        country_code: phone.country_code,
-        country_name: phone.valid_country_name.presence || phone.country
+        phone_number: national_digits(phone),
+        country_code: phone.country_code.to_s,
+        country_name: country_name_for_lead(phone)
       }
     end
 
-    private
+    def national_digits(phone)
+      phone.national_number.to_s.gsub(/\D/, "")
+    end
+
+    def country_name_for_lead(phone)
+      iso = phone.country.to_s.upcase
+      SELL_DO_COUNTRY_LABEL_OVERRIDES[iso].presence ||
+        phone.valid_country_name.presence ||
+        iso
+    end
 
     def build_valid_for_country(country)
       MUTATION_ATTEMPTS.times do

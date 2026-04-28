@@ -54,7 +54,7 @@ class ApiV1PhonesTest < ActionDispatch::IntegrationTest
     assert_response :success
     j = response.parsed_body
     d = data(j)
-    assert d["phone_number"].to_s.start_with?("+"), -> { response.body }
+    assert_match(/\A\d+\z/, d["phone_number"].to_s, -> { response.body })
     assert_match(/\A\d+\z/, d["country_code"].to_s)
     assert d["country_name"].present?
     assert_nil d["short_country_name"]
@@ -65,7 +65,7 @@ class ApiV1PhonesTest < ActionDispatch::IntegrationTest
     get "/v1/phones/random", headers: @key_headers
     assert_response :success
     d = response.parsed_body["data"]
-    assert d["phone_number"].to_s.start_with?("+")
+    assert_match(/\A\d+\z/, d["phone_number"].to_s)
     assert d["country_code"].present?
     assert d["country_name"].present?
   end
