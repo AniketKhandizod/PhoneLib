@@ -4,7 +4,17 @@
 # Random numbers are generated then re-validated with Phonelib before use.
 class PhonelibPhoneService
   class RandomGenerationError < StandardError; end
-  class InvalidRequestError < StandardError; end
+
+  # Raised for client input / validation issues. Carries optional field + stable code for API details[].
+  class InvalidRequestError < StandardError
+    attr_reader :field, :error_code
+
+    def initialize(message, field: nil, error_code: "VALIDATION_ERROR")
+      super(message)
+      @field = field&.to_s
+      @error_code = error_code.to_s.upcase
+    end
+  end
 
   MAX_GENERATION_ATTEMPTS = 2_000
   NATIONAL_DIGIT_BOUNDS = (7..12).freeze
@@ -27,36 +37,71 @@ class PhonelibPhoneService
     def lookup(phone_str:, country_iso2:)
       normalized_country = normalize_country_code(country_iso2)
       input = phone_str.to_s.strip
-      raise InvalidRequestError, "phone is required" if input.empty?
+      raise InvalidRequestError.new("phone is required", field: "phone", error_code: "PHONE_REQUIRED") if input.empty?
 
       phone = Phonelib.parse(input, normalized_country)
       unless phone.valid? && phone.valid_for_country?(normalized_country) && Phonelib.valid?(phone.sanitized)
-        raise InvalidRequestError, "Not a valid phone number for the given country"
+        raise InvalidRequestError.new(
+          "Not a valid phone number for the given country",
+          field: "phone",
+          error_code: "INVALID_PHONE_FOR_COUNTRY"
+        )
       end
 
       unless phone.country == normalized_country
-        raise InvalidRequestError, "Number does not belong to the specified country"
+        raise InvalidRequestError.new(
+          "Number does not belong to the specified country",
+          field: "phone",
+          error_code: "PHONE_COUNTRY_MISMATCH"
+        )
       end
 
-      verified_payload(phone) || raise(InvalidRequestError, "Number could not be re-verified by phonelib")
+      verified_payload(phone) || raise(
+        InvalidRequestError.new(
+          "Number could not be re-verified by phonelib",
+          field: "phone",
+          error_code: "PHONE_VERIFICATION_FAILED"
+        )
+      )
     end
 
     def validate(national_or_full:, country_dialing_code:)
       dialing = country_dialing_code.to_s.strip.delete_prefix("+")
-      raise InvalidRequestError, "country_code is required" if dialing.empty?
-      raise InvalidRequestError, "phone is required" if national_or_full.to_s.strip.empty?
+      raise InvalidRequestError.new(
+        "country_code is required",
+        field: "country_code",
+        error_code: "COUNTRY_CODE_REQUIRED"
+      ) if dialing.empty?
+
+      raise InvalidRequestError.new(
+        "phone is required",
+        field: "phone",
+        error_code: "PHONE_REQUIRED"
+      ) if national_or_full.to_s.strip.empty?
 
       unless /\A\d+\z/.match?(dialing)
-        raise InvalidRequestError, "country_code must contain digits only"
+        raise InvalidRequestError.new(
+          "country_code must contain digits only",
+          field: "country_code",
+          error_code: "INVALID_COUNTRY_CODE_FORMAT"
+        )
       end
 
       national = national_or_full.to_s.strip.gsub(/\D/, "")
       if national.empty?
-        raise InvalidRequestError, "phone must contain digits"
+        raise InvalidRequestError.new(
+          "phone must contain digits",
+          field: "phone",
+          error_code: "INVALID_PHONE_FORMAT"
+        )
       end
 
       unless find_main_country_for_dialing(dialing)
-        raise InvalidRequestError, "Unknown or ambiguous country_code (try ISO country on the lookup endpoint)"
+        raise InvalidRequestError.new(
+          "Unknown or ambiguous country_code (try ISO country on the lookup endpoint)",
+          field: "country_code",
+          error_code: "UNKNOWN_OR_AMBIGUOUS_COUNTRY_CODE"
+        )
       end
 
       e164 = "+#{dialing}#{national}"
@@ -98,8 +143,21 @@ class PhonelibPhoneService
 
     def normalize_country_code(country)
       c = country.to_s.strip.upcase
-      raise InvalidRequestError, "country must be a 2-letter ISO code" unless /\A[A-Z]{2}\z/.match?(c)
-      raise InvalidRequestError, "Unknown country" unless Phonelib.phone_data.key?(c)
+      unless /\A[A-Z]{2}\z/.match?(c)
+        raise InvalidRequestError.new(
+          "country must be a 2-letter ISO code",
+          field: "country",
+          error_code: "INVALID_COUNTRY_ISO_FORMAT"
+        )
+      end
+
+      unless Phonelib.phone_data.key?(c)
+        raise InvalidRequestError.new(
+          "Unknown country",
+          field: "country",
+          error_code: "UNKNOWN_COUNTRY"
+        )
+      end
 
       c
     end

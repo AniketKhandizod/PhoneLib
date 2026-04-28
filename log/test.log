@@ -195,3 +195,392 @@ Processing by Api::V1::PhonesController#lookup as HTML
   Parameters: {"phone"=>"2015550123", "country"=>"US"}
 Completed 200 OK in 21ms (Views: 0.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
   [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+----------------------------------------------------------------------------------------
+ApiV1PhonesTest: test_malformed_JSON_for_validate_returns_INVALID_JSON_when_auth_present
+----------------------------------------------------------------------------------------
+Started POST "/api/v1/phones/validate" for 127.0.0.1 at 2026-04-28 10:31:36 +0530
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-----------------------------------------------------------------------------
+ApiV1PhonesTest: test_unknown_nested_path_returns_structured_404_without_auth
+-----------------------------------------------------------------------------
+Started GET "/api/v1/phones/randon" for 127.0.0.1 at 2026-04-28 10:31:38 +0530
+Processing by Api::V1::RoutingController#not_found as HTML
+  Parameters: {"path"=>"phones/randon"}
+Completed 404 Not Found in 140ms (Views: 0.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-------------------------------------------
+ApiV1PhonesTest: test_validate_india_mobile
+-------------------------------------------
+Started POST "/api/v1/phones/validate" for 127.0.0.1 at 2026-04-28 10:31:38 +0530
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-----------------------------------
+ApiV1PhonesTest: test_lookup_for_US
+-----------------------------------
+Started GET "/api/v1/phones/lookup?phone=2015550123&country=US" for 127.0.0.1 at 2026-04-28 10:31:38 +0530
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+------------------------------------------------------------
+ApiV1PhonesTest: test_random_phone_returns_401_without_token
+------------------------------------------------------------
+Started GET "/api/v1/phones/random" for 127.0.0.1 at 2026-04-28 10:31:38 +0530
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+----------------------------------------------------------
+ApiV1PhonesTest: test_random_phone_returns_e164_and_fields
+----------------------------------------------------------
+Started GET "/api/v1/phones/random" for 127.0.0.1 at 2026-04-28 10:31:38 +0530
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+----------------------------------------------------------------------------
+ApiV1PhonesTest: test_wrong_bearer_token_returns_TOKEN_MISMATCH-shaped_error
+----------------------------------------------------------------------------
+Started GET "/api/v1/phones/random" for 127.0.0.1 at 2026-04-28 10:31:38 +0530
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+------------------------------------------------------------
+ApiV1PhonesTest: test_random_phone_returns_401_without_token
+------------------------------------------------------------
+Started GET "/api/v1/phones/random" for 127.0.0.1 at 2026-04-28 10:31:57 +0530
+Processing by Api::V1::PhonesController#random as HTML
+Filter chain halted as :authenticate_bearer rendered or redirected
+Completed 401 Unauthorized in 2ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+----------------------------------------------------------
+ApiV1PhonesTest: test_random_phone_returns_e164_and_fields
+----------------------------------------------------------
+Started GET "/api/v1/phones/random" for 127.0.0.1 at 2026-04-28 10:31:57 +0530
+Processing by Api::V1::PhonesController#random as HTML
+Completed 200 OK in 463ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 1.3ms)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-----------------------------------------------------------------------------
+ApiV1PhonesTest: test_unknown_nested_path_returns_structured_404_without_auth
+-----------------------------------------------------------------------------
+Started GET "/api/v1/phones/randon" for 127.0.0.1 at 2026-04-28 10:31:58 +0530
+Processing by Api::V1::RoutingController#not_found as HTML
+  Parameters: {"path"=>"phones/randon"}
+Completed 404 Not Found in 1ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-------------------------------------------
+ApiV1PhonesTest: test_validate_india_mobile
+-------------------------------------------
+Started POST "/api/v1/phones/validate" for 127.0.0.1 at 2026-04-28 10:31:58 +0530
+Processing by Api::V1::PhonesController#validate as HTML
+  Parameters: {"phone"=>"8123456789", "country_code"=>"91"}
+Completed 200 OK in 2ms (Views: 0.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+----------------------------------------------------------------------------------------
+ApiV1PhonesTest: test_malformed_JSON_for_validate_returns_INVALID_JSON_when_auth_present
+----------------------------------------------------------------------------------------
+Started POST "/api/v1/phones/validate" for 127.0.0.1 at 2026-04-28 10:31:58 +0530
+Error occurred while parsing request parameters.
+Contents:
+
+{
+Processing by Api::V1::PhonesController#validate as HTML
+Completed 400 Bad Request in 1ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  
+ActionDispatch::Http::Parameters::ParseError (Error occurred while parsing request parameters)
+Caused by: JSON::ParserError (expected object key, got EOF at line 1 column 2)
+
+Information for: ActionDispatch::Http::Parameters::ParseError (Error occurred while parsing request parameters):
+  
+app/controllers/api/v1/phones_controller.rb:32:in `validate_params'
+app/controllers/api/v1/phones_controller.rb:22:in `validate'
+lib/server_access_log_middleware.rb:17:in `call'
+test/integration/api/v1/phones_test.rb:70:in `block in <class:ApiV1PhonesTest>'
+
+Information for cause: JSON::ParserError (expected object key, got EOF at line 1 column 2):
+  
+app/controllers/api/v1/phones_controller.rb:32:in `validate_params'
+app/controllers/api/v1/phones_controller.rb:22:in `validate'
+lib/server_access_log_middleware.rb:17:in `call'
+test/integration/api/v1/phones_test.rb:70:in `block in <class:ApiV1PhonesTest>'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-----------------------------------
+ApiV1PhonesTest: test_lookup_for_US
+-----------------------------------
+Started GET "/api/v1/phones/lookup?phone=2015550123&country=US" for 127.0.0.1 at 2026-04-28 10:31:59 +0530
+Processing by Api::V1::PhonesController#lookup as HTML
+  Parameters: {"phone"=>"2015550123", "country"=>"US"}
+Completed 200 OK in 5ms (Views: 0.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+----------------------------------------------------------------------------
+ApiV1PhonesTest: test_wrong_bearer_token_returns_TOKEN_MISMATCH-shaped_error
+----------------------------------------------------------------------------
+Started GET "/api/v1/phones/random" for 127.0.0.1 at 2026-04-28 10:31:59 +0530
+Processing by Api::V1::PhonesController#random as HTML
+Filter chain halted as :authenticate_bearer rendered or redirected
+Completed 401 Unauthorized in 1ms (Views: 0.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-------------------------------------------
+ApiV1PhonesTest: test_validate_india_mobile
+-------------------------------------------
+Started POST "/api/v1/phones/validate" for 127.0.0.1 at 2026-04-28 10:32:41 +0530
+Processing by Api::V1::PhonesController#validate as HTML
+  Parameters: {"phone"=>"8123456789", "country_code"=>"91"}
+Completed 200 OK in 319ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.9ms)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+----------------------------------------------------------------------------
+ApiV1PhonesTest: test_wrong_bearer_token_returns_TOKEN_MISMATCH-shaped_error
+----------------------------------------------------------------------------
+Started GET "/api/v1/phones/random" for 127.0.0.1 at 2026-04-28 10:32:41 +0530
+Processing by Api::V1::PhonesController#random as HTML
+Filter chain halted as :authenticate_bearer rendered or redirected
+Completed 401 Unauthorized in 1ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+------------------------------------------------------------
+ApiV1PhonesTest: test_random_phone_returns_401_without_token
+------------------------------------------------------------
+Started GET "/api/v1/phones/random" for 127.0.0.1 at 2026-04-28 10:32:41 +0530
+Processing by Api::V1::PhonesController#random as HTML
+Filter chain halted as :authenticate_bearer rendered or redirected
+Completed 401 Unauthorized in 1ms (Views: 0.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-----------------------------------------------------------------------------
+ApiV1PhonesTest: test_unknown_nested_path_returns_structured_404_without_auth
+-----------------------------------------------------------------------------
+Started GET "/api/v1/phones/randon" for 127.0.0.1 at 2026-04-28 10:32:41 +0530
+Processing by Api::V1::RoutingController#not_found as HTML
+  Parameters: {"path"=>"phones/randon"}
+Completed 404 Not Found in 1ms (Views: 0.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+----------------------------------------------------------
+ApiV1PhonesTest: test_random_phone_returns_e164_and_fields
+----------------------------------------------------------
+Started GET "/api/v1/phones/random" for 127.0.0.1 at 2026-04-28 10:32:41 +0530
+Processing by Api::V1::PhonesController#random as HTML
+Completed 200 OK in 123ms (Views: 0.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.2ms)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+----------------------------------------------------------------------------------------
+ApiV1PhonesTest: test_malformed_JSON_for_validate_returns_INVALID_JSON_when_auth_present
+----------------------------------------------------------------------------------------
+Started POST "/api/v1/phones/validate" for 127.0.0.1 at 2026-04-28 10:32:41 +0530
+Error occurred while parsing request parameters.
+Contents:
+
+{
+Processing by Api::V1::PhonesController#validate as HTML
+Completed 400 Bad Request in 0ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  
+ActionDispatch::Http::Parameters::ParseError (Error occurred while parsing request parameters)
+Caused by: JSON::ParserError (expected object key, got EOF at line 1 column 2)
+
+Information for: ActionDispatch::Http::Parameters::ParseError (Error occurred while parsing request parameters):
+  
+app/controllers/api/v1/phones_controller.rb:32:in `validate_params'
+app/controllers/api/v1/phones_controller.rb:22:in `validate'
+lib/server_access_log_middleware.rb:17:in `call'
+lib/json_parse_errors_middleware.rb:11:in `call'
+test/integration/api/v1/phones_test.rb:70:in `block in <class:ApiV1PhonesTest>'
+
+Information for cause: JSON::ParserError (expected object key, got EOF at line 1 column 2):
+  
+app/controllers/api/v1/phones_controller.rb:32:in `validate_params'
+app/controllers/api/v1/phones_controller.rb:22:in `validate'
+lib/server_access_log_middleware.rb:17:in `call'
+lib/json_parse_errors_middleware.rb:11:in `call'
+test/integration/api/v1/phones_test.rb:70:in `block in <class:ApiV1PhonesTest>'
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-----------------------------------
+ApiV1PhonesTest: test_lookup_for_US
+-----------------------------------
+Started GET "/api/v1/phones/lookup?phone=2015550123&country=US" for 127.0.0.1 at 2026-04-28 10:32:41 +0530
+Processing by Api::V1::PhonesController#lookup as HTML
+  Parameters: {"phone"=>"2015550123", "country"=>"US"}
+Completed 200 OK in 7ms (Views: 0.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+----------------------------------------------------------------------------
+ApiV1PhonesTest: test_wrong_bearer_token_returns_TOKEN_MISMATCH-shaped_error
+----------------------------------------------------------------------------
+Started GET "/api/v1/phones/random" for 127.0.0.1 at 2026-04-28 10:32:56 +0530
+Processing by Api::V1::PhonesController#random as HTML
+Filter chain halted as :authenticate_bearer rendered or redirected
+Completed 401 Unauthorized in 4ms (Views: 0.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+----------------------------------------------------------------------------------------
+ApiV1PhonesTest: test_malformed_JSON_for_validate_returns_INVALID_JSON_when_auth_present
+----------------------------------------------------------------------------------------
+Started POST "/api/v1/phones/validate" for 127.0.0.1 at 2026-04-28 10:32:56 +0530
+Error occurred while parsing request parameters.
+Contents:
+
+{
+Processing by Api::V1::PhonesController#validate as HTML
+Completed 400 Bad Request in 10ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  
+ActionDispatch::Http::Parameters::ParseError (Error occurred while parsing request parameters)
+Caused by: JSON::ParserError (expected object key, got EOF at line 1 column 2)
+
+Information for: ActionDispatch::Http::Parameters::ParseError (Error occurred while parsing request parameters):
+  
+app/controllers/api/v1/phones_controller.rb:32:in `validate_params'
+app/controllers/api/v1/phones_controller.rb:22:in `validate'
+lib/server_access_log_middleware.rb:17:in `call'
+lib/json_parse_errors_middleware.rb:11:in `call'
+test/integration/api/v1/phones_test.rb:70:in `block in <class:ApiV1PhonesTest>'
+
+Information for cause: JSON::ParserError (expected object key, got EOF at line 1 column 2):
+  
+app/controllers/api/v1/phones_controller.rb:32:in `validate_params'
+app/controllers/api/v1/phones_controller.rb:22:in `validate'
+lib/server_access_log_middleware.rb:17:in `call'
+lib/json_parse_errors_middleware.rb:11:in `call'
+test/integration/api/v1/phones_test.rb:70:in `block in <class:ApiV1PhonesTest>'
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-------------------------------------------
+ApiV1PhonesTest: test_validate_india_mobile
+-------------------------------------------
+Started POST "/api/v1/phones/validate" for 127.0.0.1 at 2026-04-28 10:32:56 +0530
+Processing by Api::V1::PhonesController#validate as HTML
+  Parameters: {"phone"=>"8123456789", "country_code"=>"91"}
+Completed 200 OK in 436ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 1.6ms)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+------------------------------------------------------------
+ApiV1PhonesTest: test_random_phone_returns_401_without_token
+------------------------------------------------------------
+Started GET "/api/v1/phones/random" for 127.0.0.1 at 2026-04-28 10:32:56 +0530
+Processing by Api::V1::PhonesController#random as HTML
+Filter chain halted as :authenticate_bearer rendered or redirected
+Completed 401 Unauthorized in 1ms (Views: 0.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-----------------------------------
+ApiV1PhonesTest: test_lookup_for_US
+-----------------------------------
+Started GET "/api/v1/phones/lookup?phone=2015550123&country=US" for 127.0.0.1 at 2026-04-28 10:32:56 +0530
+Processing by Api::V1::PhonesController#lookup as HTML
+  Parameters: {"phone"=>"2015550123", "country"=>"US"}
+Completed 200 OK in 5ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-----------------------------------------------------------------------------
+ApiV1PhonesTest: test_unknown_nested_path_returns_structured_404_without_auth
+-----------------------------------------------------------------------------
+Started GET "/api/v1/phones/randon" for 127.0.0.1 at 2026-04-28 10:32:56 +0530
+Processing by Api::V1::RoutingController#not_found as HTML
+  Parameters: {"path"=>"phones/randon"}
+Completed 404 Not Found in 1ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+----------------------------------------------------------
+ApiV1PhonesTest: test_random_phone_returns_e164_and_fields
+----------------------------------------------------------
+Started GET "/api/v1/phones/random" for 127.0.0.1 at 2026-04-28 10:32:56 +0530
+Processing by Api::V1::PhonesController#random as HTML
+Completed 200 OK in 12ms (Views: 0.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+----------------------------------------------------------------------------
+ApiV1PhonesTest: test_wrong_bearer_token_returns_TOKEN_MISMATCH-shaped_error
+----------------------------------------------------------------------------
+Started GET "/api/v1/phones/random" for 127.0.0.1 at 2026-04-28 10:33:55 +0530
+Processing by Api::V1::PhonesController#random as HTML
+Filter chain halted as :authenticate_bearer rendered or redirected
+Completed 401 Unauthorized in 3ms (Views: 0.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+------------------------------------------------------------
+ApiV1PhonesTest: test_random_phone_returns_401_without_token
+------------------------------------------------------------
+Started GET "/api/v1/phones/random" for 127.0.0.1 at 2026-04-28 10:33:55 +0530
+Processing by Api::V1::PhonesController#random as HTML
+Filter chain halted as :authenticate_bearer rendered or redirected
+Completed 401 Unauthorized in 0ms (Views: 0.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-------------------------------------------
+ApiV1PhonesTest: test_validate_india_mobile
+-------------------------------------------
+Started POST "/api/v1/phones/validate" for 127.0.0.1 at 2026-04-28 10:33:55 +0530
+Processing by Api::V1::PhonesController#validate as HTML
+  Parameters: {"phone"=>"8123456789", "country_code"=>"91"}
+Completed 200 OK in 267ms (Views: 0.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.8ms)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-----------------------------------
+ApiV1PhonesTest: test_lookup_for_US
+-----------------------------------
+Started GET "/api/v1/phones/lookup?phone=2015550123&country=US" for 127.0.0.1 at 2026-04-28 10:33:55 +0530
+Processing by Api::V1::PhonesController#lookup as HTML
+  Parameters: {"phone"=>"2015550123", "country"=>"US"}
+Completed 200 OK in 6ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+----------------------------------------------------------------------------------------
+ApiV1PhonesTest: test_malformed_JSON_for_validate_returns_INVALID_JSON_when_auth_present
+----------------------------------------------------------------------------------------
+Started POST "/api/v1/phones/validate" for 127.0.0.1 at 2026-04-28 10:33:55 +0530
+Error occurred while parsing request parameters.
+Contents:
+
+{
+Processing by Api::V1::PhonesController#validate as HTML
+Completed 400 Bad Request in 0ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  
+ActionDispatch::Http::Parameters::ParseError (Error occurred while parsing request parameters)
+Caused by: JSON::ParserError (expected object key, got EOF at line 1 column 2)
+
+Information for: ActionDispatch::Http::Parameters::ParseError (Error occurred while parsing request parameters):
+  
+app/controllers/api/v1/phones_controller.rb:32:in `validate_params'
+app/controllers/api/v1/phones_controller.rb:22:in `validate'
+lib/server_access_log_middleware.rb:17:in `call'
+lib/json_parse_errors_middleware.rb:11:in `call'
+test/integration/api/v1/phones_test.rb:70:in `block in <class:ApiV1PhonesTest>'
+
+Information for cause: JSON::ParserError (expected object key, got EOF at line 1 column 2):
+  
+app/controllers/api/v1/phones_controller.rb:32:in `validate_params'
+app/controllers/api/v1/phones_controller.rb:22:in `validate'
+lib/server_access_log_middleware.rb:17:in `call'
+lib/json_parse_errors_middleware.rb:11:in `call'
+test/integration/api/v1/phones_test.rb:70:in `block in <class:ApiV1PhonesTest>'
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-----------------------------------------------------------------------------
+ApiV1PhonesTest: test_unknown_nested_path_returns_structured_404_without_auth
+-----------------------------------------------------------------------------
+Started GET "/api/v1/phones/randon" for 127.0.0.1 at 2026-04-28 10:33:55 +0530
+Processing by Api::V1::RoutingController#not_found as HTML
+  Parameters: {"path"=>"phones/randon"}
+Completed 404 Not Found in 1ms (Views: 0.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+----------------------------------------------------------
+ApiV1PhonesTest: test_random_phone_returns_e164_and_fields
+----------------------------------------------------------
+Started GET "/api/v1/phones/random" for 127.0.0.1 at 2026-04-28 10:33:55 +0530
+Processing by Api::V1::PhonesController#random as HTML
+Completed 200 OK in 11ms (Views: 0.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m

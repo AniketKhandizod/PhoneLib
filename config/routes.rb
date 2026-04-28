@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       get "phones/random", to: "phones#random"
       get "phones/lookup", to: "phones#lookup"
       post "phones/validate", to: "phones#validate"
+      match "*path", to: "routing#not_found", via: :all
     end
   end
 end
