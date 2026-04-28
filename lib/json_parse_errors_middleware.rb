@@ -19,7 +19,6 @@ class JsonParseErrorsMiddleware
     headers = Rack::Headers.new.tap do |h|
       h["Content-Type"] = "application/json; charset=UTF-8"
       h["Content-Length"] = json.bytesize.to_s
-      h.delete("WWW-Authenticate")
     end
 
     [ 400, headers, [ json ] ]
@@ -61,7 +60,7 @@ class JsonParseErrorsMiddleware
       },
       error: {
         code: "INVALID_JSON",
-        message: "Request body could not be parsed as JSON.",
+        message: "Request body is not valid JSON or could not be parsed: #{friendly_parse_message(exception)}",
         hint: "Use Content-Type: application/json and valid JSON (double-quoted keys, no trailing commas).",
         details: [
           {

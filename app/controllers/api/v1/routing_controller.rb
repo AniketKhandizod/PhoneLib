@@ -2,14 +2,15 @@
 
 module Api
   module V1
-    # Catch-all for /api/v1/* paths with no matching route (no auth required).
+    # Catch-all for /api/v1/* and /v1/* paths with no matching route (IP allowlist still applies via middleware).
     class RoutingController < ApplicationController
       include ApiRenderable
 
       def not_found
         render_error(
           code: "ROUTE_NOT_FOUND",
-          message: "No API route matched this request.",
+          message: "No route definition for #{request.request_method} #{request.path}. " \
+                   "Valid examples: GET /api/v1/phones/random or GET /v1/phones/random, GET …/lookup, POST …/validate.",
           status: :not_found,
           details: [
             {
@@ -17,7 +18,7 @@ module Api
               path: request.path
             }
           ],
-          hint: "Confirm the path and HTTP method. Example: GET /api/v1/phones/random (note spelling: random, not randon)."
+          hint: "Typo in the path (e.g. phones/randon vs phones/random) or wrong HTTP method causes this."
         )
       end
     end

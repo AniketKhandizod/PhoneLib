@@ -29,9 +29,15 @@ class PhonelibPhoneService
         next if phone.nil?
 
         payload = verified_payload(phone)
-        return payload if payload
+        next unless payload
+
+        # verified_payload already checks Phonelib; re-check E.164 before returning so only valid numbers exit the API.
+        final = Phonelib.parse(payload[:phone].to_s)
+        next unless final.valid? && Phonelib.valid?(final.sanitized)
+
+        return payload
       end
-      raise RandomGenerationError, "Could not generate a phonelib-verified number"
+      raise RandomGenerationError, "Could not generate a phonelib-verified number after #{MAX_GENERATION_ATTEMPTS} attempts"
     end
 
     def lookup(phone_str:, country_iso2:)
